@@ -34,4 +34,6 @@ for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
   }
 }
 
+t.sizeTo(rootContainer);
+
 export { };

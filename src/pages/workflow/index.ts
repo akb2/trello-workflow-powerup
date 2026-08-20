@@ -2,7 +2,7 @@ import { isDefined } from "@akb2/types-tools";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { BUTTONS } from "./buttons";
-import { CHECKING_INTERVAL } from "./data";
+import { CHECKING_INTERVAL, NO_BUTTONS_NOTIFICATION } from "./data";
 
 const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const rootContainer = document.getElementById("root-container");
@@ -23,6 +23,8 @@ const renderButtons = async () => {
   if (!list) {
     return;
   }
+
+  let renderedButtonsCount = 0;
 
   for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
     if (checkButtonCondition(t, condition) && (!isDefined(listType) || listType === list.name)) {
@@ -48,7 +50,15 @@ const renderButtons = async () => {
       });
 
       rootContainer.appendChild(button);
+      renderedButtonsCount++;
     }
+  }
+
+  if (!renderedButtonsCount) {
+    const notification = document.createElement("div");
+    notification.classList.add("notification");
+    notification.textContent = NO_BUTTONS_NOTIFICATION;
+    rootContainer.appendChild(notification);
   }
 
   t.sizeTo(rootContainer);

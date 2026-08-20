@@ -11,6 +11,6 @@ export const cardBackSectionConnector = async (t: TrelloPowerUpContext): Promise
   content: {
     type: "iframe",
     url: t.signUrl(workflowUrl.href),
-    height: 136,
+    height: 34,
   },
 })

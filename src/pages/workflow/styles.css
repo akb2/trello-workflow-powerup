@@ -10,6 +10,7 @@ body {
   justify-content: flex-start;
   align-items: stretch;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 #root-container,
@@ -51,6 +52,7 @@ body {
   display: inline-block;
   width: 20px;
   height: 20px;
+  min-width: 20px;
   mask-position: center;
   -webkit-mask-position: center;
   mask-repeat: no-repeat;

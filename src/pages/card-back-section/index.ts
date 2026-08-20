@@ -1,7 +1,7 @@
 import { TrelloCardBackSection } from "../../models/trello-card-back-section";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 
-const workflowUrl = new URL("../workflow/index.html", window.location.href);
+const workflowUrl = new URL("/src/pages/workflow/index.html", window.location.href);
 
 workflowUrl.searchParams.set("v", Date.now().toString());
 

@@ -1,5 +1,5 @@
 import { isDefined } from "@akb2/types-tools";
-import { checkButtonCondition } from "../utils/check-button-condition";
+import { checkButtonCondition } from "../../utils/check-button-condition";
 import { BUTTONS } from "./buttons";
 
 const t = window.TrelloPowerUp.iframe();

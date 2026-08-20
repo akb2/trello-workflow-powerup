@@ -1,4 +1,4 @@
-import { API_KEY } from "../data/api-key";
+import { API_KEY } from "../../data/api-key";
 
 window.TrelloPowerUp.initialize({
   "card-back-section": async (t) => ({

@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/trello-powerups/",
+  base: "/trello-workflow-powerup/",
 
   build: {
     rollupOptions: {

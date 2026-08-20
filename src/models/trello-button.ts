@@ -6,11 +6,7 @@ export interface TrelloButton {
   icon?: string;
   text: string;
   condition: ButtonCondition;
-  callback?: (
-    t: TrelloPowerUpContext,
-    opts: unknown,
-  ) => void | Promise<unknown>;
-  url?: string;
-  target?: string;
+  callback?: (t: TrelloPowerUpContext) => void | Promise<unknown>;
   listType?: ListType;
+  theme?: "primary" | "secondary" | "danger";
 }

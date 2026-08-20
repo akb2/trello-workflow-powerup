@@ -1,4 +1,5 @@
 import { TrelloButton } from "./models/trello-button";
+import { TrelloCardBackSection } from "./models/trello-card-back-section";
 import { TrelloPowerUpContext } from "./models/trello-power-up-context";
 
 interface TrelloPowerUpCapabilities {
@@ -6,6 +7,12 @@ interface TrelloPowerUpCapabilities {
     t: TrelloPowerUpContext,
     opts: unknown,
   ) => Array<TrelloButton> | Promise<Array<TrelloButton>>;
+  "card-back-section"?: (
+    t: TrelloPowerUpContext,
+    opts?: unknown,
+  ) =>
+    | TrelloCardBackSection
+    | Promise<TrelloCardBackSection>;
 }
 
 interface TrelloPowerUpInitializeOptions {
@@ -19,6 +26,7 @@ interface TrelloPowerUp {
     capabilities: TrelloPowerUpCapabilities,
     options?: TrelloPowerUpInitializeOptions,
   ): void;
+  iframe(): TrelloPowerUpContext;
 }
 
 declare global {

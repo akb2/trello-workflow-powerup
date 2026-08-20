@@ -1,0 +1,83 @@
+#root-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 8px;
+}
+
+/* Buttons */
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  transition-property: background-color, color;
+}
+
+.button:hover {
+  background-color: lightgray;
+}
+
+/* Buttons icon */
+
+.button__icon {
+  width: 20px;
+  height: 20px;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+/* Buttons themes */
+
+.button.theme-primary {
+  background-color: #0079bf;
+  color: white;
+}
+
+.button.theme-primary > .button__icon {
+  background-color: white;
+}
+
+.button.theme-primary:hover {
+  background-color: #026aa7;
+}
+
+.button.theme-secondary {
+  background-color: #f4f5f7;
+  color: black;
+}
+
+.button.theme-secondary > .button__icon {
+  background-color: black;
+}
+
+.button.theme-secondary:hover {
+  background-color: #e1e2e4;
+}
+
+.button.theme-danger {
+  background-color: #eb5a46;
+  color: white;
+}
+
+.button.theme-danger > .button__icon {
+  background-color: white;
+}
+
+.button.theme-danger:hover {
+  background-color: #c92c1b;
+}

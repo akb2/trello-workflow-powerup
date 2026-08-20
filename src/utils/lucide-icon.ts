@@ -1,0 +1,1 @@
+export const lucideIcon = (name: string): string => `https://cdn.jsdelivr.net/npm/lucide-static@1.31.0/icons/${name}.svg`;

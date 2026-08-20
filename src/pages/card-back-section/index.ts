@@ -6,7 +6,7 @@ window.TrelloPowerUp.initialize({
     icon: "https://cdn.jsdelivr.net/npm/lucide-static@1.31.0/icons/workflow.svg",
     content: {
       type: "iframe",
-      url: t.signUrl(`/src/pages/workflow/index.html?v=${Date.now()}`),
+      url: t.signUrl(`../workflow/index.html?v=${Date.now()}`),
       height: 136,
     },
   }),

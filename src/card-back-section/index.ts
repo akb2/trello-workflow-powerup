@@ -6,7 +6,7 @@ window.TrelloPowerUp.initialize({
     icon: "https://example.com/workflow.svg",
     content: {
       type: "iframe",
-      url: t.signUrl("./workflow.html"),
+      url: t.signUrl(`./workflow.html?v=${Date.now()}`),
       height: 96,
     },
   }),

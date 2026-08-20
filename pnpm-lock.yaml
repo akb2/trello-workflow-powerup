@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@akb2/types-tools':
+        specifier: ^1.2.1
+        version: 1.2.1(@akb2/math@1.1.0)
     devDependencies:
       '@types/node':
         specifier: ^26.2.0
@@ -19,6 +23,14 @@ importers:
         version: 7.3.6(@types/node@26.2.0)
 
 packages:
+
+  '@akb2/math@1.1.0':
+    resolution: {integrity: sha512-YQqyX5a8QCWvjH0HTndHM2S+qaqBSPt/23Jp5lGbwFLf5xNYt2lPbCkIl8IQzV6AtWpZPpghw2itxGM1UDbGpQ==}
+
+  '@akb2/types-tools@1.2.1':
+    resolution: {integrity: sha512-SQ3CP6uwPSYsatr4WdnCQMsSH6wXhbBZL3qgSyAw/AidtU6HAGUWpmhMAvMfajpe2TCkq6b6Pniml73Z8rVVKA==}
+    peerDependencies:
+      '@akb2/math': '>=1 <2'
 
   '@esbuild/aix-ppc64@0.28.2':
     resolution: {integrity: sha512-XExcO+dvLKvVtNTibSTBej1NCAbaGhWn9Ww1ZPx80qsahhPFe/8jgWP0IchNe0F3HwkU7n8ejhH8bjonqht8mQ==}
@@ -410,6 +422,12 @@ packages:
         optional: true
 
 snapshots:
+
+  '@akb2/math@1.1.0': {}
+
+  '@akb2/types-tools@1.2.1(@akb2/math@1.1.0)':
+    dependencies:
+      '@akb2/math': 1.1.0
 
   '@esbuild/aix-ppc64@0.28.2':
     optional: true

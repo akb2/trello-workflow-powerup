@@ -1,0 +1,30 @@
+import { ListType } from "../models/list-type";
+import { TrelloCard } from "../models/trello-card";
+import { TrelloPowerUpContext } from "../models/trello-power-up-context";
+import { getAuth } from "./get-auth";
+
+export const moveCardToList = async (t: TrelloPowerUpContext, cardId: TrelloCard['id'], targetColumn: ListType) => {
+  const auth = await getAuth(t);
+  const lists = await t.lists("id", "name");
+  const targetList = lists.find(({ name }) => name === targetColumn);
+
+  if (!targetList) {
+    throw new Error(
+      `Column "${targetColumn}" not found`,
+    );
+  }
+
+  const moveResponse = await fetch(
+    `https://api.trello.com/1/cards/${cardId}?${new URLSearchParams({
+      ...Object.fromEntries(auth),
+      idList: targetList.id,
+    })}`,
+    {
+      method: "PUT",
+    },
+  );
+
+  if (!moveResponse.ok) {
+    throw new Error("Failed to move card");
+  }
+};

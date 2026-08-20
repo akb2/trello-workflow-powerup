@@ -1,16 +1,28 @@
-interface TrelloPowerUpContext {
-    card: (...fields: string[]) => Promise<Record<string, unknown>>;
+import { TrelloButton } from "./models/trello-button";
+import { TrelloPowerUpContext } from "./models/trello-power-up-context";
+
+interface TrelloPowerUpCapabilities {
+  "card-buttons"?: (
+    t: TrelloPowerUpContext,
+    opts: unknown,
+  ) => Array<TrelloButton> | Promise<Array<TrelloButton>>;
+}
+
+interface TrelloPowerUpInitializeOptions {
+  appKey?: string;
+  appName?: string;
+  appAuthor?: string;
 }
 
 interface TrelloPowerUp {
-    initialize: (
-        capabilities: Record<
-            string,
-            (t: TrelloPowerUpContext) => unknown
-        >,
-    ) => void;
+  initialize(
+    capabilities: TrelloPowerUpCapabilities,
+    options?: TrelloPowerUpInitializeOptions,
+  ): void;
 }
 
-interface Window {
+declare global {
+  interface Window {
     TrelloPowerUp: TrelloPowerUp;
+  }
 }

@@ -1,0 +1,1 @@
+export const API_KEY = import.meta.env.VITE_TRELLO_API_KEY;

@@ -2,6 +2,7 @@ import { isDefined } from "@akb2/types-tools";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { BUTTONS } from "./buttons";
+import { CHECKING_INTERVAL } from "./data";
 
 const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const rootContainer = document.getElementById("root-container");
@@ -63,7 +64,7 @@ const checkState = async (): Promise<void> => {
   await renderButtons();
 };
 
-const interval = window.setInterval(checkState, 1000);
+const interval = window.setInterval(checkState, CHECKING_INTERVAL);
 
 t.render(renderButtons);
 

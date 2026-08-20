@@ -1,0 +1,1 @@
+export const CHECKING_INTERVAL = 500;

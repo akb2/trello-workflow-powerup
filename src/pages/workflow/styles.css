@@ -34,6 +34,9 @@ body {
   color: black;
   cursor: pointer;
   outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition-duration: 0.3s;
   transition-property: background-color, color;
 }

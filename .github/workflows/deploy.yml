@@ -44,6 +44,8 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          VITE_TRELLO_API_KEY: ${{ vars.VITE_TRELLO_API_KEY }}
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

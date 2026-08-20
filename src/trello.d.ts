@@ -16,7 +16,7 @@ interface TrelloPowerUpInitializeOptions {
 
 interface TrelloPowerUp {
   initialize(capabilities: TrelloPowerUpCapabilities, options?: TrelloPowerUpInitializeOptions): void;
-  iframe(): TrelloPowerUpContext;
+  iframe(options?: TrelloPowerUpInitializeOptions): TrelloPowerUpContext;
 }
 
 declare global {

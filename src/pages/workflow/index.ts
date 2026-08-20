@@ -1,8 +1,9 @@
 import { isDefined } from "@akb2/types-tools";
+import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { BUTTONS } from "./buttons";
 
-const t = window.TrelloPowerUp.iframe();
+const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const list = await t.list("name");
 const rootContainer = document.getElementById("root-container");
 

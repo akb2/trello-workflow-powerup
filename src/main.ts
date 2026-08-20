@@ -1,11 +1,8 @@
-import { API_KEY } from "./data/api-key";
+import { APP_OPTIONS } from "./data/app-settings";
 import { cardBackSectionConnector } from "./pages/card-back-section";
 import { showSettingsConnector } from "./pages/show-settings";
 
 window.TrelloPowerUp.initialize({
   "card-back-section": cardBackSectionConnector,
   "show-settings": showSettingsConnector,
-}, {
-  appKey: API_KEY,
-  appName: "Workflow",
-});
+}, APP_OPTIONS);

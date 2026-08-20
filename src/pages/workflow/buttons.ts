@@ -11,6 +11,15 @@ export const BUTTONS: TrelloButton[] = [
    */
 
   {
+    theme: "danger",
+    text: "Return for Clarification",
+    icon: lucideIcon('square-dashed-text'),
+    condition: ButtonCondition.Edit,
+    listType: ListType.ReadyForDevelopment,
+    callback: returnToClarificationHandler.bind(null),
+  },
+
+  {
     theme: "primary",
     text: "Start Development",
     icon: lucideIcon('code-xml'),
@@ -18,13 +27,4 @@ export const BUTTONS: TrelloButton[] = [
     listType: ListType.ReadyForDevelopment,
     callback: startDevelopmentHandler.bind(null),
   },
-
-  {
-    theme: "danger",
-    text: "Return for Clarification",
-    icon: lucideIcon('square-dashed-text'),
-    condition: ButtonCondition.Edit,
-    listType: ListType.ReadyForDevelopment,
-    callback: returnToClarificationHandler.bind(null),
-  }
 ];

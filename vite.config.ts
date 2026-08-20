@@ -7,7 +7,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        buttonsFilter: fileURLToPath(new URL("./buttons-filter.html", import.meta.url),),
+        cardBackSection: fileURLToPath(new URL("./card-back-section.html", import.meta.url)),
+        workflow: fileURLToPath(new URL("./workflow.html", import.meta.url)),
       },
     },
   },

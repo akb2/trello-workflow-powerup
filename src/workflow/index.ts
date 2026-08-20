@@ -18,7 +18,7 @@ for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
       const iconElement = document.createElement("span");
       iconElement.style.maskImage = `url(${icon})`;
       iconElement.style.webkitMaskImage = `url(${icon})`;
-      iconElement.classList.add("button-icon");
+      iconElement.classList.add("button__icon");
       button.appendChild(iconElement);
     }
 

@@ -1,12 +1,7 @@
-import { API_KEY } from "../../data/api-key";
+import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 
-window.TrelloPowerUp.initialize({
-  "show-settings": (t) => t.popup({
-    title: "Workflow Settings",
-    url: "./settings.html",
-    height: 400,
-  }),
-}, {
-  appKey: API_KEY,
-  appName: "Workflow",
+export const showSettingsConnector = (t: TrelloPowerUpContext): Promise<unknown> => t.popup({
+  title: "Workflow Settings",
+  url: "./settings.html",
+  height: 400,
 });

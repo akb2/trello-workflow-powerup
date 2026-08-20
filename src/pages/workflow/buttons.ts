@@ -12,7 +12,7 @@ export const BUTTONS: TrelloButton[] = [
 
   {
     theme: "danger",
-    text: "Вернуть на уточнение",
+    text: "Return for Clarification",
     icon: lucideIcon('square-dashed-text'),
     condition: ButtonCondition.Edit,
     listType: ListType.ReadyForDevelopment,
@@ -21,7 +21,7 @@ export const BUTTONS: TrelloButton[] = [
 
   {
     theme: "primary",
-    text: "Начать разработку",
+    text: "Start Development",
     icon: lucideIcon('code-xml'),
     condition: ButtonCondition.Edit,
     listType: ListType.ReadyForDevelopment,

@@ -13,6 +13,8 @@ if (!isDefined(rootContainer)) {
 t.render(async () => {
   const list = await t.list("name");
 
+  rootContainer.innerHTML = "";
+
   for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
     if (checkButtonCondition(t, condition) && (!isDefined(listType) || listType === list.name)) {
       const button = document.createElement("button");

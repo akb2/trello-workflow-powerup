@@ -8,6 +8,7 @@ export interface TrelloPopupOptions {
   items?: Array<{
     text: string;
     icon?: string;
+    avatar?: string;
     callback: () => Promise<void>;
   }>;
   search?: {

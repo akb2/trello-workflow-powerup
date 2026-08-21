@@ -1,5 +1,6 @@
 import { OpenMemberPickerOptions } from "../models/open-member-picker-options";
 import { getBoardMembers } from "./get-board-members";
+import { getMemberAvatarUrl } from "./get-member-avatar-url";
 
 export const openMemberPicker = async ({
   trelloContext,
@@ -20,6 +21,7 @@ export const openMemberPicker = async ({
       .filter(({ id }) => !disabledIds.has(id))
       .map((member) => ({
         text: member.fullName,
+        avatar: getMemberAvatarUrl(member),
         callback: async () => {
           await onSelect(member);
           await trelloContext.closePopup();

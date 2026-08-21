@@ -1,6 +1,7 @@
 import { isDefined } from "@akb2/types-tools";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { connectStyle } from "../../utils/connect-style";
+import styles from "./button.css?url";
 import { ButtonComponentProps } from "./button.types";
 
 export const buttonComponent = ({ callback, icon, text, theme }: ButtonComponentProps, t: TrelloPowerUpContext) => {
@@ -8,7 +9,7 @@ export const buttonComponent = ({ callback, icon, text, theme }: ButtonComponent
     throw new Error("Button must have either text or icon defined");
   }
 
-  connectStyle('src/components/button/button.css');
+  connectStyle(styles);
 
   const button = document.createElement("button");
 

@@ -1,4 +1,5 @@
 import { isDefined } from "@akb2/types-tools";
+import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { getCardAssignee } from "../../utils/get-card-assignee";
@@ -32,29 +33,11 @@ const renderButtons = async (): Promise<boolean> => {
 
   for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
     if (checkButtonCondition(t, condition) && (!isDefined(listType) || listType === list.name)) {
-      const button = document.createElement("button");
-
-      if (isDefined(icon)) {
-        const iconElement = document.createElement("span");
-        iconElement.style.maskImage = `url(${icon})`;
-        iconElement.style.webkitMaskImage = `url(${icon})`;
-        iconElement.classList.add("button__icon");
-        button.appendChild(iconElement);
+      try {
+        actionsContainer.appendChild(buttonComponent({ icon, theme, callback, text }, t));
+        renderedButtonsCount++;
+      } catch {
       }
-
-      if (isDefined(theme)) {
-        button.classList.add(`theme-${theme}`);
-      }
-
-      button.classList.add("button");
-      button.appendChild(document.createTextNode(text ?? "Default Button"));
-      button.addEventListener('click', () => {
-        callback?.(t);
-
-      });
-
-      actionsContainer.appendChild(button);
-      renderedButtonsCount++;
     }
   }
 
@@ -77,8 +60,6 @@ const renderAssignee = async (): Promise<boolean> => {
     const assigneeElement = document.createElement("div");
     const assigneeTitleElement = document.createElement("span");
     const assigneeNameElement = document.createElement("span");
-    const assigneeDeleteButtonElement = document.createElement("button");
-    const assigneeDeleteButtonIconElement = document.createElement("span");
     const avatarElement = document.createElement("img");
 
     assigneeElement.classList.add("assignee");
@@ -89,28 +70,21 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeNameElement.textContent = assignee.fullName;
     assigneeNameElement.classList.add("assignee__name");
 
-    assigneeDeleteButtonElement.classList.add("assignee__delete-button");
-    assigneeDeleteButtonElement.classList.add("button");
-    assigneeDeleteButtonElement.classList.add("theme-danger");
-    assigneeDeleteButtonElement.classList.add("type-icon");
-    assigneeDeleteButtonElement.addEventListener('click', async () => {
-      await setCardAssignee(t, null);
-      await requestRender();
-    });
-
-    assigneeDeleteButtonIconElement.classList.add("button__icon");
-    assigneeDeleteButtonIconElement.style.maskImage = `url(${lucideIcon('x')})`;
-    assigneeDeleteButtonIconElement.style.webkitMaskImage = `url(${lucideIcon('x')})`;
-
     avatarElement.alt = assignee.fullName;
     avatarElement.src = avatar ? avatar : lucideIcon('user-round');
     avatarElement.classList.add(avatar ? "assignee__image" : "assignee__icon");
 
-    assigneeDeleteButtonElement.appendChild(assigneeDeleteButtonIconElement);
     assigneeElement.appendChild(avatarElement);
     assigneeElement.appendChild(assigneeTitleElement);
     assigneeElement.appendChild(assigneeNameElement);
-    assigneeElement.appendChild(assigneeDeleteButtonElement);
+    assigneeElement.appendChild(buttonComponent({
+      icon: lucideIcon('x'),
+      theme: 'danger',
+      callback: async () => {
+        await setCardAssignee(t, null);
+        await requestRender();
+      }
+    }, t));
     rootContainer.appendChild(assigneeElement);
 
     return true;

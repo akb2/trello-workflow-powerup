@@ -1,7 +1,3 @@
-import { TASK_NUMBER_BADGE } from "../../data/badges";
-import { TrelloCardDetailBadge } from "../../models/trello-card-detail-badge";
-import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
+import { getBadges } from "../../utils/get-badges";
 
-export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promise<TrelloCardDetailBadge[]> => [
-  TASK_NUMBER_BADGE,
-];
+export const cardDetailBadgesConnector = getBadges;

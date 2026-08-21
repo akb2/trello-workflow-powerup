@@ -1,10 +1,9 @@
 import { isDefined } from "@akb2/types-tools";
-import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { connectStyle } from "../../utils/connect-style";
 import styles from "./button.css?url";
 import { ButtonComponentProps } from "./button.types";
 
-export const buttonComponent = async ({ callback, icon, text, theme }: ButtonComponentProps, t: TrelloPowerUpContext) => {
+export const buttonComponent = async ({ callback, icon, text, theme, trelloContext }: ButtonComponentProps) => {
   if (!isDefined(text) && !isDefined(icon)) {
     throw new Error("Button must have either text or icon defined");
   }
@@ -33,7 +32,7 @@ export const buttonComponent = async ({ callback, icon, text, theme }: ButtonCom
 
   button.classList.add("button");
   button.appendChild(document.createTextNode(text ?? "Default Button"));
-  button.addEventListener('click', () => callback?.(t));
+  button.addEventListener('click', () => callback?.(trelloContext));
 
   return button;
 };

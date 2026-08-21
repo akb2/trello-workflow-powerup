@@ -1,11 +1,8 @@
 import { isDefined } from "@akb2/types-tools";
+import { assigneeComponent } from "../../components/assignee/assignee";
 import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
-import { getCardAssignee } from "../../utils/get-card-assignee";
-import { getMemberAvatarUrl } from "../../utils/get-member-avatar-url";
-import { lucideIcon } from "../../utils/lucide-icon";
-import { setCardAssignee } from "../../utils/set-card-assignee";
 import { BUTTONS } from "./buttons";
 import { CHECKING_INTERVAL, NO_BUTTONS_NOTIFICATION } from "./data";
 
@@ -34,7 +31,7 @@ const renderButtons = async (): Promise<boolean> => {
   for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
     if (checkButtonCondition(t, condition) && (!isDefined(listType) || listType === list.name)) {
       try {
-        actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text }, t));
+        actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text, trelloContext: t }));
         renderedButtonsCount++;
       } catch {
       }
@@ -52,42 +49,9 @@ const renderButtons = async (): Promise<boolean> => {
 };
 
 const renderAssignee = async (): Promise<boolean> => {
-  const assignee = await getCardAssignee(t);
+  const assigneeElement = await assigneeComponent({ trelloContext: t, deleteCallback: requestRender });
 
-  if (isDefined(assignee)) {
-    const avatar = getMemberAvatarUrl(assignee);
-
-    const assigneeElement = document.createElement("div");
-    const assigneeTitleElement = document.createElement("span");
-    const assigneeNameElement = document.createElement("span");
-    const avatarElement = document.createElement("img");
-    const deleteButton = await buttonComponent({
-      icon: lucideIcon('x'),
-      theme: 'danger',
-      callback: async () => {
-        await setCardAssignee(t, null);
-        await requestRender();
-      }
-    }, t);
-
-    assigneeElement.classList.add("assignee");
-
-    assigneeTitleElement.textContent = "Assignee to:";
-    assigneeTitleElement.classList.add("assignee__title");
-
-    assigneeNameElement.textContent = assignee.fullName;
-    assigneeNameElement.classList.add("assignee__name");
-
-    avatarElement.alt = assignee.fullName;
-    avatarElement.src = avatar ? avatar : lucideIcon('user-round');
-    avatarElement.classList.add(avatar ? "assignee__image" : "assignee__icon");
-
-    deleteButton.classList.add("assignee__delete-button");
-
-    assigneeElement.appendChild(avatarElement);
-    assigneeElement.appendChild(assigneeTitleElement);
-    assigneeElement.appendChild(assigneeNameElement);
-    assigneeElement.appendChild(deleteButton);
+  if (isDefined(assigneeElement)) {
     rootContainer.appendChild(assigneeElement);
 
     return true;

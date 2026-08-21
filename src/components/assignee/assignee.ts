@@ -17,7 +17,7 @@ export const assigneeComponent = async ({ refreshCallback, trelloContext }: Assi
     buttonComponent({
       trelloContext,
       icon: lucideIcon('user-round-cog'),
-      theme: 'primary',
+      theme: 'secondary',
       callback: ({ }: TrelloPowerUpContext, mouseEvent: MouseEvent) => openMemberPicker({
         trelloContext,
         mouseEvent,

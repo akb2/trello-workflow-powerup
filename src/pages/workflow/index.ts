@@ -92,7 +92,7 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeDeleteButtonElement.classList.add("theme-danger");
     assigneeDeleteButtonElement.classList.add("type-icon");
     assigneeDeleteButtonElement.addEventListener('click', async () => {
-      setCardAssignee(t, null);
+      await setCardAssignee(t, null);
       await render();
     });
 

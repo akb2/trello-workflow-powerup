@@ -8,7 +8,7 @@ export const buttonComponent = ({ callback, icon, text, theme }: ButtonComponent
     throw new Error("Button must have either text or icon defined");
   }
 
-  connectStyle('src/components/button/button.ts');
+  connectStyle('src/components/button/button.css');
 
   const button = document.createElement("button");
 

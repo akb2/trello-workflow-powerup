@@ -1,5 +1,5 @@
 export const connectStyle = (href: string): HTMLLinkElement => {
-  const absoluteHref = (import.meta.env.BASE_URL + href).replace(/\\/g, "/");
+  const absoluteHref = href.replace(/\\/g, "/");
   const existing = Array
     .from(document.head.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]'))
     .find((link) => link.href === new URL(absoluteHref, window.location.href).href);

@@ -19,6 +19,7 @@ const renderButtons = async (): Promise<boolean> => {
   const card = await t.card("idList");
   const lists = await t.lists("id", "name");
   const list = lists.find(({ id }) => id === card.idList);
+  const actionsContainer = document.createElement("div");
 
   if (!list) {
     return false;
@@ -49,12 +50,18 @@ const renderButtons = async (): Promise<boolean> => {
 
       });
 
-      rootContainer.appendChild(button);
+      actionsContainer.appendChild(button);
       renderedButtonsCount++;
     }
   }
 
-  return renderedButtonsCount > 0;
+  if (renderedButtonsCount > 0) {
+    rootContainer.appendChild(actionsContainer);
+
+    return true;
+  }
+
+  return false;
 };
 
 const renderAssignee = async (): Promise<boolean> => {

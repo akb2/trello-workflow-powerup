@@ -66,7 +66,7 @@ const renderAssignee = async (): Promise<boolean> => {
     const assigneeNameElement = document.createElement("span");
     const assigneeDeleteButtonElement = document.createElement("button");
     const assigneeDeleteButtonIconElement = document.createElement("span");
-    let avatarElement;
+    const avatarElement = document.createElement("img");
 
     assigneeElement.classList.add("assignee");
 
@@ -89,17 +89,9 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeDeleteButtonIconElement.style.maskImage = `url(${lucideIcon('x')})`;
     assigneeDeleteButtonIconElement.style.webkitMaskImage = `url(${lucideIcon('x')})`;
 
-    if (isDefined(assignee.avatarUrl)) {
-      avatarElement = document.createElement("img");
-      avatarElement.src = assignee.avatarUrl;
-      avatarElement.alt = assignee.fullName;
-      avatarElement.classList.add("assignee__image");
-    } else {
-      avatarElement = document.createElement("span");
-      avatarElement.style.maskImage = `url(${lucideIcon('user-round')})`;
-      avatarElement.style.webkitMaskImage = `url(${lucideIcon('user-round')})`;
-      avatarElement.classList.add("assignee__icon");
-    }
+    avatarElement.alt = assignee.fullName;
+    avatarElement.src = assignee.avatarUrl ? assignee.avatarUrl : lucideIcon('user-round');
+    avatarElement.classList.add(assignee.avatarUrl ? "assignee__image" : "assignee__icon");
 
     assigneeDeleteButtonElement.appendChild(assigneeDeleteButtonIconElement);
     assigneeElement.appendChild(avatarElement);

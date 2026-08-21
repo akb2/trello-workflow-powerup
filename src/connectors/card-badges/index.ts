@@ -7,6 +7,7 @@ import { getTaskNumber } from "../../utils/get-task-number";
 import { lucideIcon } from "../../utils/lucide-icon";
 
 export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<TrelloCardBadge[]> => {
+  const badges: TrelloCardBadge[] = [];
   const [taskNumber, assignee] = await Promise.all([
     getTaskNumber(t),
     getCardAssignee(t),
@@ -15,20 +16,20 @@ export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<Trel
     ? getMemberAvatarUrl(assignee)
     : null;
 
-  return [
-    ...(assignee
-      ? [{
-        text: avatarUrl ? "" : assignee?.fullName,
-        icon: avatarUrl ?? lucideIcon("user-round"),
-        color: avatarUrl ? TrelloBadgeColor.Blue : TrelloBadgeColor.LightGray,
-        monochrome: !avatarUrl,
-      }]
-      : []
-    ),
-    {
-      text: taskNumber,
-      icon: lucideIcon("hash"),
-      color: TrelloBadgeColor.Blue,
-    }
-  ];
+  if (assignee) {
+    badges.push({
+      text: avatarUrl ? "" : assignee?.fullName,
+      icon: avatarUrl ?? lucideIcon("user-round"),
+      color: avatarUrl ? TrelloBadgeColor.Blue : TrelloBadgeColor.LightGray,
+      monochrome: !avatarUrl,
+    });
+  }
+
+  badges.push({
+    text: taskNumber,
+    icon: lucideIcon("hash"),
+    color: TrelloBadgeColor.Blue,
+  });
+
+  return badges;
 };

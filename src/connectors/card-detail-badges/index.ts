@@ -5,8 +5,7 @@ import { getTaskNumber } from "../../utils/get-task-number";
 
 export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promise<TrelloCardDetailBadge[]> => ([
   {
-    title: "Task:",
-    text: await getTaskNumber(t),
+    text: `Task: ${await getTaskNumber(t)}`,
     color: TrelloBadgeColor.Blue,
   }
 ]);

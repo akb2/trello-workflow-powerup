@@ -20,8 +20,6 @@ const renderButtons = async (): Promise<boolean> => {
   const lists = await t.lists("id", "name");
   const list = lists.find(({ id }) => id === card.idList);
 
-  currentListId = card.idList;
-
   if (!list) {
     return false;
   }
@@ -62,7 +60,7 @@ const renderButtons = async (): Promise<boolean> => {
 const renderAssignee = async (): Promise<boolean> => {
   const assignee = await getCardAssignee(t);
 
-  if (assignee) {
+  if (isDefined(assignee)) {
     const assigneeElement = document.createElement("div");
     const assigneeTitleElement = document.createElement("span");
     const assigneeNameElement = document.createElement("span");
@@ -81,7 +79,10 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeDeleteButtonElement.classList.add("assignee__delete-button");
     assigneeDeleteButtonElement.classList.add("button");
     assigneeDeleteButtonElement.classList.add("theme-danger");
-    assigneeDeleteButtonElement.addEventListener('click', setCardAssignee.bind(null, t, null));
+    assigneeDeleteButtonElement.addEventListener('click', async () => {
+      setCardAssignee(t, null);
+      await render();
+    });
 
     assigneeDeleteButtonIconElement.classList.add("button__icon");
     assigneeDeleteButtonIconElement.style.maskImage = `url(${lucideIcon('x')})`;
@@ -105,10 +106,11 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeElement.appendChild(assigneeNameElement);
     assigneeElement.appendChild(assigneeDeleteButtonElement);
     rootContainer.appendChild(assigneeElement);
-  } else {
+
+    return true;
   }
 
-  return true;
+  return false;
 };
 
 const renderNotification = () => {
@@ -119,12 +121,14 @@ const renderNotification = () => {
 };
 
 const render = async () => {
+  const card = await t.card("idList");
+
+  currentListId = card.idList;
   rootContainer.replaceChildren();
 
-  const hasContent = (
-    await renderAssignee()
-    || await renderButtons()
-  );
+  const hasAssignee = await renderAssignee();
+  const hasButtons = await renderButtons();
+  const hasContent = hasAssignee || hasButtons;
 
   if (!hasContent) {
     renderNotification();

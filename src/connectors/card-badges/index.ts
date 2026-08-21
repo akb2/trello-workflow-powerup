@@ -20,6 +20,7 @@ export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<Trel
       icon: avatarUrl ?? lucideIcon("user-round"),
       text: assignee.fullName,
       color: null,
+      monochrome: !avatarUrl
     });
   }
 

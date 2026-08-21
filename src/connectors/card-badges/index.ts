@@ -12,23 +12,16 @@ export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<Trel
     getTaskNumber(t),
     getCardAssignee(t),
   ]);
-  const avatarUrl = assignee
-    ? getMemberAvatarUrl(assignee)
-    : null;
 
   if (assignee) {
-    if (avatarUrl) {
-      badges.push({
-        icon: avatarUrl,
-        monochrome: false,
-      });
-    } else {
-      badges.push({
-        text: assignee?.fullName,
-        icon: lucideIcon("user-round"),
-        color: TrelloBadgeColor.LightGray,
-      });
-    }
+    const avatarUrl = getMemberAvatarUrl(assignee);
+
+    badges.push({
+      icon: avatarUrl ?? lucideIcon("user-round"),
+      text: assignee.fullName,
+      color: avatarUrl ? null : TrelloBadgeColor.LightGray,
+      monochrome: true,
+    });
   }
 
   badges.push({

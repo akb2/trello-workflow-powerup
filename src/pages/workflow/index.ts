@@ -2,6 +2,7 @@ import { isDefined } from "@akb2/types-tools";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { getCardAssignee } from "../../utils/get-card-assignee";
+import { getMemberAvatarUrl } from "../../utils/get-member-avatar-url";
 import { lucideIcon } from "../../utils/lucide-icon";
 import { setCardAssignee } from "../../utils/set-card-assignee";
 import { BUTTONS } from "./buttons";
@@ -68,6 +69,8 @@ const renderAssignee = async (): Promise<boolean> => {
   const assignee = await getCardAssignee(t);
 
   if (isDefined(assignee)) {
+    const avatar = getMemberAvatarUrl(assignee);
+
     const assigneeElement = document.createElement("div");
     const assigneeTitleElement = document.createElement("span");
     const assigneeNameElement = document.createElement("span");
@@ -97,8 +100,8 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeDeleteButtonIconElement.style.webkitMaskImage = `url(${lucideIcon('x')})`;
 
     avatarElement.alt = assignee.fullName;
-    avatarElement.src = assignee.avatarUrl ? assignee.avatarUrl : lucideIcon('user-round');
-    avatarElement.classList.add(assignee.avatarUrl ? "assignee__image" : "assignee__icon");
+    avatarElement.src = avatar ? avatar : lucideIcon('user-round');
+    avatarElement.classList.add(avatar ? "assignee__image" : "assignee__icon");
 
     assigneeDeleteButtonElement.appendChild(assigneeDeleteButtonIconElement);
     assigneeElement.appendChild(avatarElement);

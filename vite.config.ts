@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         connectors: fileURLToPath(new URL("./index.html", import.meta.url)),
         workflow: fileURLToPath(new URL("./src/pages/workflow/index.html", import.meta.url)),
+        settings: fileURLToPath(new URL("./src/pages/settings/index.html", import.meta.url)),
       },
     },
   },

@@ -10,7 +10,9 @@ import { CHECKING_INTERVAL, NO_BUTTONS_NOTIFICATION } from "./data";
 
 const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const rootContainer = document.getElementById("root-container");
+
 let currentListId: string | undefined;
+let renderPromise = Promise.resolve();
 
 if (!isDefined(rootContainer)) {
   throw new Error("Root container not found");
@@ -93,7 +95,7 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeDeleteButtonElement.classList.add("type-icon");
     assigneeDeleteButtonElement.addEventListener('click', async () => {
       await setCardAssignee(t, null);
-      await render();
+      await requestRender();
     });
 
     assigneeDeleteButtonIconElement.classList.add("button__icon");
@@ -141,6 +143,12 @@ const render = async () => {
   t.sizeTo(rootContainer);
 };
 
+const requestRender = (): Promise<void> => {
+  renderPromise = renderPromise.then(render);
+
+  return renderPromise;
+};
+
 const checkState = async (): Promise<void> => {
   const card = await t.card("idList");
 
@@ -148,12 +156,12 @@ const checkState = async (): Promise<void> => {
     return;
   }
 
-  await render();
+  await requestRender();
 };
 
 const interval = window.setInterval(checkState, CHECKING_INTERVAL);
 
-t.render(render);
+t.render(requestRender);
 
 window.addEventListener("resize", () => t.sizeTo(rootContainer));
 window.addEventListener("beforeunload", () => window.clearInterval(interval));

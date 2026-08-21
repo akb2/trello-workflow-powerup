@@ -61,6 +61,14 @@ const renderAssignee = async (): Promise<boolean> => {
     const assigneeTitleElement = document.createElement("span");
     const assigneeNameElement = document.createElement("span");
     const avatarElement = document.createElement("img");
+    const deleteButton = await buttonComponent({
+      icon: lucideIcon('x'),
+      theme: 'danger',
+      callback: async () => {
+        await setCardAssignee(t, null);
+        await requestRender();
+      }
+    }, t);
 
     assigneeElement.classList.add("assignee");
 
@@ -74,17 +82,12 @@ const renderAssignee = async (): Promise<boolean> => {
     avatarElement.src = avatar ? avatar : lucideIcon('user-round');
     avatarElement.classList.add(avatar ? "assignee__image" : "assignee__icon");
 
+    deleteButton.classList.add("assignee__delete-button");
+
     assigneeElement.appendChild(avatarElement);
     assigneeElement.appendChild(assigneeTitleElement);
     assigneeElement.appendChild(assigneeNameElement);
-    assigneeElement.appendChild(await buttonComponent({
-      icon: lucideIcon('x'),
-      theme: 'danger',
-      callback: async () => {
-        await setCardAssignee(t, null);
-        await requestRender();
-      }
-    }, t));
+    assigneeElement.appendChild(deleteButton);
     rootContainer.appendChild(assigneeElement);
 
     return true;

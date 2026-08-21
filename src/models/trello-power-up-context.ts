@@ -1,3 +1,4 @@
+import { TrelloBoard } from "./trello-board";
 import { TrelloCard } from "./trello-card";
 import { TrelloList } from "./trello-list";
 import { TrelloMember } from "./trello-member";
@@ -13,6 +14,7 @@ export interface TrelloPowerUpContext {
   lists(...fields: Array<keyof TrelloList>): Promise<TrelloList[]>;
   card(...fields: Array<keyof TrelloCard | "all">): Promise<TrelloCard>;
   member(...fields: Array<keyof TrelloMember>): Promise<TrelloMember>;
+  board<K extends keyof TrelloBoard>(...fields: K[]): Promise<Pick<TrelloBoard, K>>;
 
   get<T>(
     scope: TrelloPowerUpDataScope,

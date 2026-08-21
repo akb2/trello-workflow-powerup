@@ -1,0 +1,42 @@
+.assignee {
+  display: grid;
+  grid-template-columns: auto minmax(1px, 220px) auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "avatar title delete-button"
+    "avatar name delete-button";
+  gap: 2px 8px;
+  align-items: center;
+}
+
+.assignee__avatar {
+  grid-area: avatar;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.assignee__title {
+  grid-area: title;
+  font-size: 12px;
+  line-height: 16px;
+  color: #c2c2c2;
+}
+
+.assignee__name {
+  grid-area: name;
+  font-size: 14px;
+  line-height: 20px;
+  color: #e1e1e1;
+}
+
+.assignee__title,
+.assignee__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assignee__delete-button {
+  grid-area: delete-button;
+}

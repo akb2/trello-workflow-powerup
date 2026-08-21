@@ -1,4 +1,4 @@
-import { TrelloPowerUpInitializeOptions } from "../trello";
+import { TrelloPowerUpInitializeOptions } from "../models/trello-power-upInitialize-options";
 import { API_KEY } from "./api-key";
 
 export const APP_OPTIONS: TrelloPowerUpInitializeOptions = {

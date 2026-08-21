@@ -34,7 +34,7 @@ const renderButtons = async (): Promise<boolean> => {
   for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
     if (checkButtonCondition(t, condition) && (!isDefined(listType) || listType === list.name)) {
       try {
-        actionsContainer.appendChild(buttonComponent({ icon, theme, callback, text }, t));
+        actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text }, t));
         renderedButtonsCount++;
       } catch {
       }
@@ -77,7 +77,7 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeElement.appendChild(avatarElement);
     assigneeElement.appendChild(assigneeTitleElement);
     assigneeElement.appendChild(assigneeNameElement);
-    assigneeElement.appendChild(buttonComponent({
+    assigneeElement.appendChild(await buttonComponent({
       icon: lucideIcon('x'),
       theme: 'danger',
       callback: async () => {

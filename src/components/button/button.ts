@@ -4,12 +4,12 @@ import { connectStyle } from "../../utils/connect-style";
 import styles from "./button.css?url";
 import { ButtonComponentProps } from "./button.types";
 
-export const buttonComponent = ({ callback, icon, text, theme }: ButtonComponentProps, t: TrelloPowerUpContext) => {
+export const buttonComponent = async ({ callback, icon, text, theme }: ButtonComponentProps, t: TrelloPowerUpContext) => {
   if (!isDefined(text) && !isDefined(icon)) {
     throw new Error("Button must have either text or icon defined");
   }
 
-  connectStyle(styles);
+  await connectStyle(styles);
 
   const button = document.createElement("button");
 

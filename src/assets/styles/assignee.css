@@ -1,6 +1,6 @@
 .assignee {
   display: grid;
-  grid-template-columns: auto minmax(1px, 220px) auto;
+  grid-template-columns: auto fit-content(220px) auto;
   grid-template-rows: auto auto;
   grid-template-areas:
     "avatar title delete-button"

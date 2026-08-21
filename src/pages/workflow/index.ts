@@ -79,6 +79,7 @@ const renderAssignee = async (): Promise<boolean> => {
     assigneeDeleteButtonElement.classList.add("assignee__delete-button");
     assigneeDeleteButtonElement.classList.add("button");
     assigneeDeleteButtonElement.classList.add("theme-danger");
+    assigneeDeleteButtonElement.classList.add("type-icon");
     assigneeDeleteButtonElement.addEventListener('click', async () => {
       setCardAssignee(t, null);
       await render();
@@ -92,7 +93,7 @@ const renderAssignee = async (): Promise<boolean> => {
       avatarElement = document.createElement("img");
       avatarElement.src = assignee.avatarUrl;
       avatarElement.alt = assignee.fullName;
-      avatarElement.classList.add("assignee__avatar");
+      avatarElement.classList.add("assignee__image");
     } else {
       avatarElement = document.createElement("span");
       avatarElement.style.maskImage = `url(${lucideIcon('user-round')})`;

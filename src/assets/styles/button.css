@@ -81,3 +81,10 @@
 .button.theme-danger:hover {
   background-color: #c92c1b;
 }
+
+/* Buttons types */
+
+.button.type-icon {
+  padding: 8px;
+  border-radius: 50%;
+}

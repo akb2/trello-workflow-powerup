@@ -9,11 +9,20 @@
   align-items: center;
 }
 
-.assignee__avatar {
+.assignee__image,
+.assignee__icon {
   grid-area: avatar;
   width: 40px;
   height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 50%;
+  display: block;
+}
+
+.assignee__icon {
+  padding: 8px;
+  background-color: #5e6c84;
 }
 
 .assignee__title {

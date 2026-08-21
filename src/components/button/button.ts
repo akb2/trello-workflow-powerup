@@ -35,7 +35,7 @@ export const buttonComponent = async ({ callback, icon, text, theme, trelloConte
   }
 
   button.classList.add("button");
-  button.addEventListener('click', () => callback?.(trelloContext));
+  button.addEventListener('click', event => callback?.(trelloContext, event));
 
   return button;
 };

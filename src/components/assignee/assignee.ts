@@ -1,4 +1,5 @@
 import { isDefined } from "@akb2/types-tools";
+import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { connectStyle } from "../../utils/connect-style";
 import { getCardAssignee } from "../../utils/get-card-assignee";
 import { getMemberAvatarUrl } from "../../utils/get-member-avatar-url";
@@ -17,8 +18,10 @@ export const assigneeComponent = async ({ refreshCallback, trelloContext }: Assi
       trelloContext,
       icon: lucideIcon('user-round-cog'),
       theme: 'primary',
-      callback: () => openMemberPicker({
-        trelloContext, onSelect: async (member) => {
+      callback: ({ }: TrelloPowerUpContext, mouseEvent: MouseEvent) => openMemberPicker({
+        trelloContext,
+        mouseEvent,
+        onSelect: async (member) => {
           await setCardAssignee(trelloContext, member.id);
           await refreshCallback();
         }

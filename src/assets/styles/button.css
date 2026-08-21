@@ -1,0 +1,83 @@
+/* Buttons */
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 12px;
+  line-height: 18px;
+  font-size: 14px;
+  gap: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition-duration: 0.3s;
+  transition-property: background-color, color;
+}
+
+.button:hover {
+  background-color: lightgray;
+}
+
+/* Buttons icon */
+
+.button__icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+/* Buttons themes */
+
+.button.theme-primary {
+  background-color: #0079bf;
+  color: white;
+}
+
+.button.theme-primary > .button__icon {
+  background-color: white;
+}
+
+.button.theme-primary:hover {
+  background-color: #026aa7;
+}
+
+.button.theme-secondary {
+  background-color: #3a3b3c;
+  color: white;
+}
+
+.button.theme-secondary > .button__icon {
+  background-color: white;
+}
+
+.button.theme-secondary:hover {
+  background-color: #4c4d4f;
+}
+
+.button.theme-danger {
+  background-color: #eb5a46;
+  color: white;
+}
+
+.button.theme-danger > .button__icon {
+  background-color: white;
+}
+
+.button.theme-danger:hover {
+  background-color: #c92c1b;
+}

@@ -4,6 +4,8 @@ import { TrelloMember } from "./trello-member";
 import { TrelloModelType } from "./trello-model-type";
 import { TrelloPopupOptions } from "./trello-popup-options";
 import { TrelloPowerUpContextData } from "./trello-power-up-context-data";
+import { TrelloPowerUpDataScope } from "./trello-power-up-data-scope";
+import { TrelloPowerUpDataVisibility } from "./trello-power-up-data-visibility";
 import { TrelloRestApi } from "./trello-rest-api";
 
 export interface TrelloPowerUpContext {
@@ -11,6 +13,20 @@ export interface TrelloPowerUpContext {
   lists(...fields: Array<keyof TrelloList>): Promise<TrelloList[]>;
   card(...fields: Array<keyof TrelloCard | "all">): Promise<TrelloCard>;
   member(...fields: Array<keyof TrelloMember>): Promise<TrelloMember>;
+
+  get<T>(
+    scope: TrelloPowerUpDataScope,
+    visibility: TrelloPowerUpDataVisibility,
+    key: string,
+    defaultValue?: T,
+  ): Promise<T>;
+
+  set<T>(
+    scope: TrelloPowerUpDataScope,
+    visibility: TrelloPowerUpDataVisibility,
+    key: string,
+    value: T,
+  ): Promise<void>;
 
   getRestApi(): Promise<TrelloRestApi>;
   signUrl(url: string): string;

@@ -1,4 +1,5 @@
 import { isDefined } from "@akb2/types-tools";
+import { assigneeFieldComponent } from "../../components/assignee-field/assignee-field";
 import { assigneeComponent } from "../../components/assignee/assignee";
 import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
@@ -53,6 +54,14 @@ const renderAssignee = async (): Promise<boolean> => {
 
   if (isDefined(assigneeElement)) {
     rootContainer.appendChild(assigneeElement);
+
+    return true;
+  }
+
+  const assigneeFieldElement = await assigneeFieldComponent({ trelloContext: t, refreshCallback: requestRender });
+
+  if (isDefined(assigneeFieldElement)) {
+    rootContainer.appendChild(assigneeFieldElement);
 
     return true;
   }

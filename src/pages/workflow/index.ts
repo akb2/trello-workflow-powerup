@@ -57,6 +57,7 @@ const renderButtons = async (): Promise<boolean> => {
   }
 
   if (renderedButtonsCount > 0) {
+    actionsContainer.classList.add("actions");
     rootContainer.appendChild(actionsContainer);
 
     return true;

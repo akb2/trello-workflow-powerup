@@ -9,7 +9,19 @@ import styles from "./assignee.css?url";
 import { AssigneeComponentProps } from "./assignee.types";
 
 export const assigneeComponent = async ({ deleteCallback, trelloContext }: AssigneeComponentProps) => {
-  const [, assignee] = await Promise.all([connectStyle(styles), getCardAssignee(trelloContext)]);
+  const [, assignee, deleteButton] = await Promise.all([
+    connectStyle(styles),
+    getCardAssignee(trelloContext),
+    buttonComponent({
+      trelloContext,
+      icon: lucideIcon('x'),
+      theme: 'danger',
+      callback: async () => {
+        await setCardAssignee(trelloContext, null);
+        await deleteCallback();
+      },
+    })
+  ]);
 
   if (!isDefined(assignee)) {
     return null;
@@ -21,15 +33,6 @@ export const assigneeComponent = async ({ deleteCallback, trelloContext }: Assig
   const assigneeTitleElement = document.createElement("span");
   const assigneeNameElement = document.createElement("span");
   const avatarElement = document.createElement("img");
-  const deleteButton = await buttonComponent({
-    trelloContext,
-    icon: lucideIcon('x'),
-    theme: 'danger',
-    callback: async () => {
-      await setCardAssignee(trelloContext, null);
-      await deleteCallback();
-    },
-  });
 
   assigneeElement.classList.add("assignee");
 

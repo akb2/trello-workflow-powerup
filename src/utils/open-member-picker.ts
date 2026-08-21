@@ -21,7 +21,7 @@ export const openMemberPicker = async ({
       .filter(({ id }) => !disabledIds.has(id))
       .map((member) => ({
         text: member.fullName,
-        avatar: getMemberAvatarUrl(member),
+        avatar: getMemberAvatarUrl(member) ?? undefined,
         callback: async () => {
           await onSelect(member);
           await trelloContext.closePopup();

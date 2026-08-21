@@ -1,6 +1,6 @@
+import { cardBackSectionConnector } from "./connectors/card-back-section";
+import { showSettingsConnector } from "./connectors/show-settings";
 import { APP_OPTIONS } from "./data/app-settings";
-import { cardBackSectionConnector } from "./pages/card-back-section";
-import { showSettingsConnector } from "./pages/show-settings";
 
 window.TrelloPowerUp.initialize({
   "card-back-section": cardBackSectionConnector,

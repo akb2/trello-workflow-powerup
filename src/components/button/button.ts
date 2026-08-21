@@ -30,8 +30,11 @@ export const buttonComponent = async ({ callback, icon, text, theme, trelloConte
     button.classList.add(`theme-${theme}`);
   }
 
+  if (text) {
+    button.appendChild(document.createTextNode(text));
+  }
+
   button.classList.add("button");
-  button.appendChild(document.createTextNode(text ?? "Default Button"));
   button.addEventListener('click', () => callback?.(trelloContext));
 
   return button;

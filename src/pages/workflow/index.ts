@@ -49,7 +49,7 @@ const renderButtons = async (): Promise<boolean> => {
 };
 
 const renderAssignee = async (): Promise<boolean> => {
-  const assigneeElement = await assigneeComponent({ trelloContext: t, deleteCallback: requestRender });
+  const assigneeElement = await assigneeComponent({ trelloContext: t, refreshCallback: requestRender });
 
   if (isDefined(assigneeElement)) {
     rootContainer.appendChild(assigneeElement);

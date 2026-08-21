@@ -1,6 +1,6 @@
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 
-export interface AssigneeComponentProps {
+export interface AssigneeFieldComponentProps {
   trelloContext: TrelloPowerUpContext;
   refreshCallback: () => Promise<void>;
 }

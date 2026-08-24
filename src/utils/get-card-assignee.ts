@@ -3,7 +3,7 @@ import { TrelloPowerUpContext } from "../models/trello-power-up-context";
 import { getBoardMembers } from "./get-board-members";
 import { getCardSettings } from "./get-card-settings";
 
-export const getCardAssignee = async (t: TrelloPowerUpContext,): Promise<TrelloMember | null> => {
+export const getCardAssignee = async (t: TrelloPowerUpContext): Promise<TrelloMember | null> => {
   const settings = await getCardSettings(t);
   const members = await getBoardMembers(t);
 

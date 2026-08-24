@@ -17,14 +17,14 @@ export interface TrelloPowerUpContext {
   board<K extends keyof TrelloBoard>(...fields: K[]): Promise<Pick<TrelloBoard, K>>;
 
   get<T>(
-    scope: TrelloPowerUpDataScope,
+    scope: TrelloPowerUpDataScope | number | string,
     visibility: TrelloPowerUpDataVisibility,
     key: string,
     defaultValue?: T,
   ): Promise<T>;
 
   set<T>(
-    scope: TrelloPowerUpDataScope,
+    scope: TrelloPowerUpDataScope | number | string,
     visibility: TrelloPowerUpDataVisibility,
     key: string,
     value: T,

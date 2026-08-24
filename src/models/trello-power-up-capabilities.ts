@@ -5,6 +5,7 @@ import { TrelloCardDetailBadge } from "./trello-card-detail-badge";
 import { TrelloPowerUpContext } from "./trello-power-up-context";
 
 export interface TrelloPowerUpCapabilities {
+  "board-buttons"?: (t: TrelloPowerUpContext) => Promise<unknown> | unknown;
   "card-buttons"?: (t: TrelloPowerUpContext, opts: unknown) => Array<TrelloButton> | Promise<Array<TrelloButton>>;
   "card-back-section"?: (t: TrelloPowerUpContext, opts?: unknown) => TrelloCardBackSection | Promise<TrelloCardBackSection>;
   "show-settings"?: (t: TrelloPowerUpContext, opts?: unknown) => unknown | Promise<unknown>;

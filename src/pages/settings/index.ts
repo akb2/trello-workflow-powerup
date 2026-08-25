@@ -56,7 +56,7 @@ const saveButtonRender = async (trelloContext: TrelloPowerUpContext) => {
       icon: lucideIcon('x'),
       theme: 'secondary',
       text: 'Cancel',
-      callback: ({ closePopup }) => closePopup()
+      callback: trelloContext => trelloContext.closePopup()
     })
   ]);
 

@@ -180,4 +180,4 @@ window.addEventListener("resize", () => t.sizeTo(rootContainer));
  * Start flow
  */
 
-render().catch(console.error);
+t.render(render);

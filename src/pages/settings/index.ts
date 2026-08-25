@@ -2,6 +2,7 @@ import { isDefined } from "@akb2/types-tools";
 import { buttonComponent } from "../../components/button/button";
 import { userFullBadgeComponent } from "../../components/user-full-badge/user-full-badge";
 import { APP_OPTIONS } from "../../data/app-settings";
+import { ListType } from "../../models/list-type";
 import { TrelloModelType } from "../../models/trello-model-type";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { connectStyle } from "../../utils/connect-style";
@@ -52,6 +53,7 @@ const saveButtonRender = async () => {
 const listsRender = async () => {
   const listsContainer = document.getElementById("list-assignees-container");
   const lists = await t.lists("id", "name");
+  const listTypes = Object.values(ListType);
 
   if (!isDefined(listsContainer)) {
     throw new Error("Lists container not found");
@@ -59,7 +61,21 @@ const listsRender = async () => {
 
   listsContainer.replaceChildren();
 
-  for (const list of lists) {
+  for (const listType of listTypes) {
+    const listContainer = document.createElement("div");
+    const list = lists.find((l) => l.name === listType);
+
+    if (!isDefined(list)) {
+      const noAssigneeElement = document.createElement("p");
+      noAssigneeElement.textContent = `List "${listType}" not found`;
+      noAssigneeElement.classList.add("list-item__no-assignee");
+
+      listContainer.appendChild(noAssigneeElement);
+      listsContainer.appendChild(listContainer);
+
+      continue;
+    }
+
     const [listSettings, assigneeButton, deleteButton] = await Promise.all([
       getListSettings(t, list.id),
       buttonComponent({
@@ -85,7 +101,6 @@ const listsRender = async () => {
         },
       }),
     ]);
-    const listContainer = document.createElement("div");
     const listName = document.createElement("h3");
     const userElement = isDefined(listSettings.assigneeId)
       ? await userFullBadgeComponent({

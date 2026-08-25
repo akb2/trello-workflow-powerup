@@ -26,19 +26,19 @@ if (!isDefined(rootContainer)) {
  * Render's functions
  */
 
-const saveButtonRender = async () => {
+const saveButtonRender = async (trelloContext: TrelloPowerUpContext) => {
   const actionsContainer = document.getElementById("actions");
 
   if (!isDefined(actionsContainer)) {
     throw new Error("Actions container not found");
   }
 
-  const settings = await getBoardSettings(t);
+  const settings = await getBoardSettings(trelloContext);
   const prefixInput = document.getElementById("task-number-prefix") as HTMLInputElement;
 
   const [saveButton, closeButton] = await Promise.all([
     buttonComponent({
-      trelloContext: t,
+      trelloContext,
       icon: lucideIcon('save'),
       theme: 'primary',
       text: 'Save',
@@ -52,7 +52,7 @@ const saveButtonRender = async () => {
       }
     }),
     buttonComponent({
-      trelloContext: t,
+      trelloContext,
       icon: lucideIcon('x'),
       theme: 'secondary',
       text: 'Cancel',
@@ -65,9 +65,9 @@ const saveButtonRender = async () => {
   actionsContainer.appendChild(saveButton);
 };
 
-const listsRender = async () => {
+const listsRender = async (trelloContext: TrelloPowerUpContext) => {
   const listsContainer = document.getElementById("list-assignees-container");
-  const lists = await t.lists("id", "name");
+  const lists = await trelloContext.lists("id", "name");
   const listTypes = Object.values(ListType);
 
   if (!isDefined(listsContainer)) {
@@ -94,34 +94,34 @@ const listsRender = async () => {
     }
 
     const [listSettings, assigneeButton, deleteButton] = await Promise.all([
-      getListSettings(t, list.id),
+      getListSettings(trelloContext, list.id),
       buttonComponent({
-        trelloContext: t,
+        trelloContext,
         icon: lucideIcon('user-round-cog'),
         theme: 'secondary',
-        callback: ({ }: TrelloPowerUpContext, mouseEvent: MouseEvent) => openMemberPicker({
-          trelloContext: t,
+        callback: (trelloContext: TrelloPowerUpContext, mouseEvent: MouseEvent) => openMemberPicker({
+          trelloContext,
           mouseEvent,
           onSelect: async (member) => {
-            await setListSettings(t, list.id, { assigneeId: member.id });
-            await requestRender();
+            await setListSettings(trelloContext, list.id, { assigneeId: member.id });
+            await requestRender(trelloContext);
           }
         }),
       }),
       buttonComponent({
-        trelloContext: t,
+        trelloContext,
         icon: lucideIcon('x'),
         theme: 'danger',
         callback: async () => {
-          await setListSettings(t, list.id, { assigneeId: null });
-          await requestRender();
+          await setListSettings(trelloContext, list.id, { assigneeId: null });
+          await requestRender(trelloContext);
         },
       }),
     ]);
     const listName = document.createElement("h3");
     const userElement = isDefined(listSettings.assigneeId)
       ? await userFullBadgeComponent({
-        trelloContext: t,
+        trelloContext,
         title: 'Assigned to:',
         userId: listSettings.assigneeId
       })
@@ -154,26 +154,26 @@ const listsRender = async () => {
   }
 };
 
-const fieldsRender = async () => {
+const fieldsRender = async (trelloContext: TrelloPowerUpContext) => {
   const prefixInput = document.getElementById("task-number-prefix") as HTMLInputElement;
-  const settings = await getBoardSettings(t);
+  const settings = await getBoardSettings(trelloContext);
 
   prefixInput.value = settings.taskPrefix;
 };
 
-const render = async () => {
+const render = async (trelloContext: TrelloPowerUpContext) => {
   await Promise.all([
     connectStyle(styles),
-    fieldsRender(),
-    saveButtonRender(),
-    listsRender(),
+    fieldsRender(trelloContext),
+    saveButtonRender(trelloContext),
+    listsRender(trelloContext),
   ]);
 
-  t.sizeTo(rootContainer);
+  trelloContext.sizeTo(rootContainer);
 };
 
-const requestRender = (): Promise<void> => {
-  renderPromise = renderPromise.then(render);
+const requestRender = (trelloContext: TrelloPowerUpContext): Promise<void> => {
+  renderPromise = renderPromise.then(() => render(trelloContext));
 
   return renderPromise;
 };
@@ -188,4 +188,4 @@ window.addEventListener("resize", () => t.sizeTo(rootContainer));
  * Start flow
  */
 
-t.render(requestRender);
+t.render(() => requestRender(t));

@@ -65,6 +65,8 @@ const listsRender = async () => {
     const listContainer = document.createElement("div");
     const list = lists.find((l) => l.name === listType);
 
+    listContainer.classList.add("list-item");
+
     if (!isDefined(list)) {
       const noAssigneeElement = document.createElement("p");
       noAssigneeElement.textContent = `List "${listType}" not found`;
@@ -110,17 +112,17 @@ const listsRender = async () => {
       })
       : null;
 
+    listContainer.setAttribute("data-list-id", list.id);
+
     listName.textContent = list.name;
     listName.classList.add("list-item__name");
-
-    listContainer.classList.add("list-item");
-    listContainer.setAttribute("data-list-id", list.id);
     listContainer.appendChild(listName);
 
     if (isDefined(userElement)) {
       listContainer.appendChild(userElement);
     } else {
       const noAssigneeElement = document.createElement("p");
+
       noAssigneeElement.textContent = "No assignee";
       noAssigneeElement.classList.add("list-item__no-assignee");
 

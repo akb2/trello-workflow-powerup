@@ -11,7 +11,7 @@ import { lucideIcon } from "../../utils/lucide-icon";
 import { openMemberPicker } from "../../utils/open-member-picker";
 import { setBoardSettings } from "../../utils/set-board-settings";
 import { setListSettings } from "../../utils/set-list-settings";
-import styles from "./index.css?url";
+import styles from "./styles.css?url";
 
 const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const rootContainer = document.getElementById("root-container");

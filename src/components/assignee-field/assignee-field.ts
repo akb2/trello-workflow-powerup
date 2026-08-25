@@ -1,10 +1,10 @@
 import { isDefined } from "@akb2/types-tools";
-import { TrelloPowerUpContext } from "../../../models/trello-power-up-context";
-import { connectStyle } from "../../../utils/connect-style";
-import { lucideIcon } from "../../../utils/lucide-icon";
-import { openMemberPicker } from "../../../utils/open-member-picker";
-import { setCardAssignee } from "../../../utils/set-card-assignee";
-import { buttonComponent } from "../../button/button";
+import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
+import { connectStyle } from "../../utils/connect-style";
+import { lucideIcon } from "../../utils/lucide-icon";
+import { openMemberPicker } from "../../utils/open-member-picker";
+import { setCardAssignee } from "../../utils/set-card-assignee";
+import { buttonComponent } from "../button/button";
 import styles from "./assignee-field.css?url";
 import { AssigneeFieldComponentProps } from "./assignee-field.types";
 

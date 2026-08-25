@@ -60,7 +60,7 @@ const listsRender = async () => {
   listsContainer.replaceChildren();
 
   for (const list of lists) {
-    const [listSettings, assigneeButton] = await Promise.all([
+    const [listSettings, assigneeButton, deleteButton] = await Promise.all([
       getListSettings(t, list.id),
       buttonComponent({
         trelloContext: t,
@@ -115,6 +115,7 @@ const listsRender = async () => {
     listContainer.appendChild(assigneeButton);
 
     if (isDefined(userElement)) {
+      listContainer.appendChild(deleteButton);
     }
 
     listsContainer.appendChild(listContainer);
@@ -149,4 +150,4 @@ window.addEventListener("resize", () => t.sizeTo(rootContainer));
  * Start flow
  */
 
-render();
+render().catch(console.error);

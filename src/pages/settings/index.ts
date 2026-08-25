@@ -1,10 +1,17 @@
 import { isDefined } from "@akb2/types-tools";
+import { buttonComponent } from "../../components/button/button";
 import { userFullBadgeComponent } from "../../components/user-full-badge/user-full-badge";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { TrelloModelType } from "../../models/trello-model-type";
+import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
+import { connectStyle } from "../../utils/connect-style";
 import { getBoardSettings } from "../../utils/get-board-settings";
 import { getListSettings } from "../../utils/get-list-settings";
+import { lucideIcon } from "../../utils/lucide-icon";
+import { openMemberPicker } from "../../utils/open-member-picker";
 import { setBoardSettings } from "../../utils/set-board-settings";
+import { setListSettings } from "../../utils/set-list-settings";
+import styles from "./index.css?url";
 
 const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const rootContainer = document.getElementById("root-container");
@@ -53,9 +60,33 @@ const listsRender = async () => {
   listsContainer.replaceChildren();
 
   for (const list of lists) {
+    const [listSettings, assigneeButton] = await Promise.all([
+      getListSettings(t, list.id),
+      buttonComponent({
+        trelloContext: t,
+        icon: lucideIcon('user-round-cog'),
+        theme: 'secondary',
+        callback: ({ }: TrelloPowerUpContext, mouseEvent: MouseEvent) => openMemberPicker({
+          trelloContext: t,
+          mouseEvent,
+          onSelect: async (member) => {
+            await setListSettings(t, list.id, { assigneeId: member.id });
+            await listsRender();
+          }
+        }),
+      }),
+      buttonComponent({
+        trelloContext: t,
+        icon: lucideIcon('x'),
+        theme: 'danger',
+        callback: async () => {
+          await setListSettings(t, list.id, { assigneeId: null });
+          await listsRender();
+        },
+      }),
+    ]);
     const listContainer = document.createElement("div");
     const listName = document.createElement("h3");
-    const listSettings = await getListSettings(t, list.id);
     const userElement = isDefined(listSettings.assigneeId)
       ? await userFullBadgeComponent({
         trelloContext: t,
@@ -64,14 +95,26 @@ const listsRender = async () => {
       })
       : null;
 
-    listContainer.classList.add("list-container");
-    listContainer.setAttribute("data-list-id", list.id);
     listName.textContent = list.name;
+    listName.classList.add("list-item__name");
 
+    listContainer.classList.add("list-item");
+    listContainer.setAttribute("data-list-id", list.id);
     listContainer.appendChild(listName);
 
     if (isDefined(userElement)) {
       listContainer.appendChild(userElement);
+    } else {
+      const noAssigneeElement = document.createElement("p");
+      noAssigneeElement.textContent = "No assignee";
+      noAssigneeElement.classList.add("list-item__no-assignee");
+
+      listContainer.appendChild(noAssigneeElement);
+    }
+
+    listContainer.appendChild(assigneeButton);
+
+    if (isDefined(userElement)) {
     }
 
     listsContainer.appendChild(listContainer);
@@ -86,9 +129,12 @@ const fieldsRender = async () => {
 };
 
 const render = async () => {
-  await fieldsRender();
-  await saveButtonRender();
-  await listsRender();
+  await Promise.all([
+    connectStyle(styles),
+    fieldsRender(),
+    saveButtonRender(),
+    listsRender(),
+  ]);
 
   t.sizeTo(rootContainer);
 };

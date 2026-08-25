@@ -1,1 +1,39 @@
 @import url("../../assets/styles/general.css");
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 4px;
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: #646464;
+  padding: 8px 0;
+}
+
+.list-item + .list-item {
+  border-top-width: 0;
+}
+
+.list-item__name {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #d4d4d4;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-item__no-assignee {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 500;
+  color: #646464;
+}

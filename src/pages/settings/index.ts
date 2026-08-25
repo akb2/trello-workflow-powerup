@@ -1,5 +1,5 @@
 import { isDefined } from "@akb2/types-tools";
-import { assigneeFieldComponent } from "../../components/assignee/assignee-field/assignee-field";
+import { assigneeFieldComponent } from "../../components/assignee-field/assignee-field";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { TrelloModelType } from "../../models/trello-model-type";
 import { getBoardSettings } from "../../utils/get-board-settings";

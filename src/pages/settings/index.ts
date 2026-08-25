@@ -1,5 +1,5 @@
 import { isDefined } from "@akb2/types-tools";
-import { assigneeFieldComponent } from "../../components/assignee-field/assignee-field";
+import { userFullBadgeComponent } from "../../components/user-full-badge/user-full-badge";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { TrelloModelType } from "../../models/trello-model-type";
 import { getBoardSettings } from "../../utils/get-board-settings";
@@ -56,6 +56,13 @@ const listsRender = async () => {
     const listContainer = document.createElement("div");
     const listName = document.createElement("h3");
     const listSettings = await getListSettings(t, list.id);
+    const userElement = isDefined(listSettings.assigneeId)
+      ? await userFullBadgeComponent({
+        trelloContext: t,
+        title: 'Assigned to:',
+        userId: listSettings.assigneeId
+      })
+      : null;
 
     listContainer.classList.add("list-container");
     listContainer.setAttribute("data-list-id", list.id);
@@ -63,8 +70,8 @@ const listsRender = async () => {
 
     listContainer.appendChild(listName);
 
-    if (isDefined(listSettings.assigneeId)) {
-      listContainer.appendChild(await assigneeFieldComponent({ trelloContext: t, listId: list.id, listName: list.name }));
+    if (isDefined(userElement)) {
+      listContainer.appendChild(userElement);
     }
 
     listsContainer.appendChild(listContainer);

@@ -1,5 +1,6 @@
 export enum ListType {
   BackLog = 'Backlog',
+  InClarification = 'In Clarification',
   ReadyForDevelopment = 'Ready for Development',
   InDevelopment = 'In Development',
   InCodeReview = 'In Code Review',

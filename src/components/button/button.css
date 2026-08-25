@@ -20,6 +20,10 @@
   text-overflow: ellipsis;
   transition-duration: 0.3s;
   transition-property: background-color, color;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .button:hover {

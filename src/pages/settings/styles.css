@@ -29,6 +29,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 0;
 }
 
 .list-item__no-assignee {
@@ -36,4 +37,5 @@
   line-height: 16px;
   font-weight: 500;
   color: #646464;
+  margin-bottom: 0;
 }

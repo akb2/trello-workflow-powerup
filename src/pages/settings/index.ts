@@ -42,13 +42,13 @@ const saveButtonRender = async () => {
       icon: lucideIcon('save'),
       theme: 'primary',
       text: 'Save',
-      callback: async () => {
-        await setBoardSettings(t, {
+      callback: async (trelloContext) => {
+        await setBoardSettings(trelloContext, {
           ...settings,
           taskPrefix: prefixInput.value.trim(),
         });
 
-        t.closePopup();
+        trelloContext.closePopup();
       }
     }),
     buttonComponent({
@@ -56,7 +56,7 @@ const saveButtonRender = async () => {
       icon: lucideIcon('x'),
       theme: 'secondary',
       text: 'Cancel',
-      callback: () => t.closePopup()
+      callback: ({ closePopup }) => closePopup()
     })
   ]);
 

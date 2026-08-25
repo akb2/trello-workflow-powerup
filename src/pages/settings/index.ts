@@ -102,7 +102,7 @@ const listsRender = async () => {
           mouseEvent,
           onSelect: async (member) => {
             await setListSettings(t, list.id, { assigneeId: member.id });
-            await listsRender();
+            await render();
           }
         }),
       }),
@@ -112,7 +112,7 @@ const listsRender = async () => {
         theme: 'danger',
         callback: async () => {
           await setListSettings(t, list.id, { assigneeId: null });
-          await listsRender();
+          await render();
         },
       }),
     ]);

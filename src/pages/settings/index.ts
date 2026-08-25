@@ -16,6 +16,8 @@ import styles from "./styles.css?url";
 const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const rootContainer = document.getElementById("root-container");
 
+let renderPromise = Promise.resolve();
+
 if (!isDefined(rootContainer)) {
   throw new Error("Root container not found");
 }
@@ -102,7 +104,7 @@ const listsRender = async () => {
           mouseEvent,
           onSelect: async (member) => {
             await setListSettings(t, list.id, { assigneeId: member.id });
-            await render();
+            await requestRender();
           }
         }),
       }),
@@ -112,7 +114,7 @@ const listsRender = async () => {
         theme: 'danger',
         callback: async () => {
           await setListSettings(t, list.id, { assigneeId: null });
-          await render();
+          await requestRender();
         },
       }),
     ]);
@@ -170,6 +172,12 @@ const render = async () => {
   t.sizeTo(rootContainer);
 };
 
+const requestRender = (): Promise<void> => {
+  renderPromise = renderPromise.then(render);
+
+  return renderPromise;
+};
+
 /**
  * Events
  */
@@ -180,4 +188,4 @@ window.addEventListener("resize", () => t.sizeTo(rootContainer));
  * Start flow
  */
 
-t.render(render);
+t.render(requestRender);

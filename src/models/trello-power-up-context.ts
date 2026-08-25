@@ -39,6 +39,7 @@ export interface TrelloPowerUpContext {
 
   popup(options: TrelloPopupOptions): Promise<unknown>;
   closePopup(): Promise<unknown>;
+  notifyParent(message: string, payload?: unknown): Promise<unknown>;
 
   render(callback: () => unknown): void;
   sizeTo(target: string | HTMLElement | number): Promise<unknown>;

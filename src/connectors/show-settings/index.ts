@@ -8,4 +8,5 @@ export const showSettingsConnector = (t: TrelloPowerUpContext): Promise<unknown>
   title: "Workflow Settings",
   url: url.href,
   height: 400,
+  callback: (trelloContext: TrelloPowerUpContext) => trelloContext.closePopup(),
 });

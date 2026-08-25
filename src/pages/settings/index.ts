@@ -47,8 +47,7 @@ const saveButtonRender = async (trelloContext: TrelloPowerUpContext) => {
           ...settings,
           taskPrefix: prefixInput.value.trim(),
         });
-
-        trelloContext.closePopup();
+        await trelloContext.notifyParent("done");
       }
     }),
     buttonComponent({
@@ -56,7 +55,7 @@ const saveButtonRender = async (trelloContext: TrelloPowerUpContext) => {
       icon: lucideIcon('x'),
       theme: 'secondary',
       text: 'Cancel',
-      callback: trelloContext => trelloContext.closePopup()
+      callback: trelloContext => trelloContext.notifyParent("done")
     })
   ]);
 

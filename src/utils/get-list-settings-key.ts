@@ -1,0 +1,1 @@
+export const getListSettingsKey = (listId: string): string => "list-settings:" + listId;

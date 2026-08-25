@@ -1,6 +1,6 @@
 import { isDefined } from "@akb2/types-tools";
-import { assigneeFieldComponent } from "../../components/assignee-field/assignee-field";
 import { assigneeComponent } from "../../components/assignee/assignee";
+import { assigneeFieldComponent } from "../../components/assignee/assignee-field/assignee-field";
 import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";

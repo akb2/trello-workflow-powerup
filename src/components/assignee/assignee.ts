@@ -2,11 +2,11 @@ import { isDefined } from "@akb2/types-tools";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { connectStyle } from "../../utils/connect-style";
 import { getCardAssignee } from "../../utils/get-card-assignee";
-import { getMemberAvatarUrl } from "../../utils/get-member-avatar-url";
 import { lucideIcon } from "../../utils/lucide-icon";
 import { openMemberPicker } from "../../utils/open-member-picker";
 import { setCardAssignee } from "../../utils/set-card-assignee";
 import { buttonComponent } from "../button/button";
+import { userFullBadgeComponent } from "../user-full-badge/user-full-badge";
 import styles from "./assignee.css?url";
 import { AssigneeComponentProps } from "./assignee.types";
 
@@ -42,31 +42,19 @@ export const assigneeComponent = async ({ refreshCallback, trelloContext }: Assi
     return null;
   }
 
-  const avatar = getMemberAvatarUrl(assignee);
-
   const assigneeElement = document.createElement("div");
-  const assigneeTitleElement = document.createElement("span");
-  const assigneeNameElement = document.createElement("span");
-  const avatarElement = document.createElement("img");
+  const assigneeBadgeElement = await userFullBadgeComponent({
+    trelloContext,
+    title: "Assignee to:",
+    userId: assignee.id
+  });
 
   assigneeElement.classList.add("assignee");
 
-  assigneeTitleElement.textContent = "Assignee to:";
-  assigneeTitleElement.classList.add("assignee__title");
+  if (isDefined(assigneeBadgeElement)) {
+    assigneeElement.appendChild(assigneeBadgeElement);
+  }
 
-  assigneeNameElement.textContent = assignee.fullName;
-  assigneeNameElement.classList.add("assignee__name");
-
-  avatarElement.alt = assignee.fullName;
-  avatarElement.src = avatar ? avatar : lucideIcon('user-round');
-  avatarElement.classList.add(avatar ? "assignee__image" : "assignee__icon");
-
-  changeButton.classList.add("assignee__change-button");
-  deleteButton.classList.add("assignee__delete-button");
-
-  assigneeElement.appendChild(avatarElement);
-  assigneeElement.appendChild(assigneeTitleElement);
-  assigneeElement.appendChild(assigneeNameElement);
   assigneeElement.appendChild(changeButton);
   assigneeElement.appendChild(deleteButton);
 

@@ -1,0 +1,54 @@
+.user-full-badge {
+  display: grid;
+  grid-template-columns: auto fit-content(220px) auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "avatar title"
+    "avatar name";
+  gap: 2px 8px;
+  align-items: center;
+}
+
+.user-full-badge__image,
+.user-full-badge__icon {
+  grid-area: avatar;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  display: block;
+}
+
+.user-full-badge__icon {
+  padding: 8px;
+  background-color: #9d9d9d;
+  color: #2f2f2f;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+.user-full-badge__title {
+  grid-area: title;
+  font-size: 12px;
+  line-height: 16px;
+  color: #c2c2c2;
+}
+
+.user-full-badge__name {
+  grid-area: name;
+  font-size: 14px;
+  line-height: 20px;
+  color: #e1e1e1;
+}
+
+.user-full-badge__title,
+.user-full-badge__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

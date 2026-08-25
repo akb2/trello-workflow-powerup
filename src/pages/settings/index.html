@@ -13,11 +13,19 @@
 
 <body>
   <div id="root-container">
-    <label for="task-number-prefix">Task number prefix</label>
-    <input id="task-number-prefix"
-           type="text"
-           placeholder="BB-"
-           maxlength="16" />
+    <section>
+      <label for="task-number-prefix">Task number prefix</label>
+      <input id="task-number-prefix"
+             type="text"
+             placeholder="BB-"
+             maxlength="16" />
+    </section>
+
+    <section>
+      <h3>List assignees</h3>
+      <div id="list-assignees-container"></div>
+    </section>
+
     <button id="save-button">Save</button>
   </div>
 

@@ -3,7 +3,6 @@ import { buttonComponent } from "../../components/button/button";
 import { userFullBadgeComponent } from "../../components/user-full-badge/user-full-badge";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { ListType } from "../../models/list-type";
-import { TrelloModelType } from "../../models/trello-model-type";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { connectStyle } from "../../utils/connect-style";
 import { getBoardSettings } from "../../utils/get-board-settings";
@@ -26,28 +25,42 @@ if (!isDefined(rootContainer)) {
  */
 
 const saveButtonRender = async () => {
-  const saveButton = document.getElementById("save-button") as HTMLButtonElement;
+  const actionsContainer = document.getElementById("actions");
 
-  if (!isDefined(saveButton)) {
-    throw new Error("Save button not found");
+  if (!isDefined(actionsContainer)) {
+    throw new Error("Actions container not found");
   }
 
-  if (saveButton.hasAttribute("data-rendered")) {
-    const settings = await getBoardSettings(t);
-    const prefixInput = document.getElementById("task-number-prefix") as HTMLInputElement;
+  const settings = await getBoardSettings(t);
+  const prefixInput = document.getElementById("task-number-prefix") as HTMLInputElement;
 
-    saveButton.disabled = !t.memberCanWriteToModel(TrelloModelType.Board);
-    saveButton.setAttribute("data-rendered", "true");
+  const [saveButton, closeButton] = await Promise.all([
+    buttonComponent({
+      trelloContext: t,
+      icon: lucideIcon('save'),
+      theme: 'primary',
+      text: 'Save',
+      callback: async () => {
+        await setBoardSettings(t, {
+          ...settings,
+          taskPrefix: prefixInput.value.trim(),
+        });
 
-    saveButton.addEventListener("click", async () => {
-      await setBoardSettings(t, {
-        ...settings,
-        taskPrefix: prefixInput.value.trim(),
-      });
+        t.closePopup();
+      }
+    }),
+    buttonComponent({
+      trelloContext: t,
+      icon: lucideIcon('x'),
+      theme: 'secondary',
+      text: 'Cancel',
+      callback: () => t.closePopup()
+    })
+  ]);
 
-      t.closePopup();
-    });
-  }
+  actionsContainer.replaceChildren();
+  actionsContainer.appendChild(closeButton);
+  actionsContainer.appendChild(saveButton);
 };
 
 const listsRender = async () => {

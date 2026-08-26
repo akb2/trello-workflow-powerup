@@ -4,6 +4,8 @@ import { assigneeComponent } from "../../components/assignee/assignee";
 import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
+import { getAuth } from "../../utils/get-auth";
+import { lucideIcon } from "../../utils/lucide-icon";
 import { BUTTONS } from "./buttons";
 import { CHECKING_INTERVAL, NO_BUTTONS_NOTIFICATION } from "./data";
 
@@ -69,6 +71,25 @@ const renderAssignee = async (): Promise<boolean> => {
   return false;
 };
 
+const renderAuthorization = async (): Promise<boolean> => {
+  rootContainer.appendChild(await buttonComponent({
+    trelloContext: t,
+    icon: lucideIcon("key-round"),
+    theme: "primary",
+    text: "Authorize Power-Up",
+
+    callback: async () => {
+      const api = await t.getRestApi();
+
+      await api.authorize({ scope: "read,write", });
+
+      window.location.reload();
+    },
+  }));
+
+  return true;
+}
+
 const renderNotification = () => {
   const notification = document.createElement("div");
   notification.classList.add("notification");
@@ -78,15 +99,19 @@ const renderNotification = () => {
 
 const render = async () => {
   const card = await t.card("idList");
+  const auth = await getAuth(t);
+  let renderedItems: boolean = false;
 
   currentListId = card.idList;
   rootContainer.replaceChildren();
 
-  const hasAssignee = await renderAssignee();
-  const hasButtons = await renderButtons();
-  const hasContent = hasAssignee || hasButtons;
+  if (auth) {
+    renderedItems = (await Promise.all([renderAssignee(), renderButtons()])).some(Boolean);
+  } else {
+    renderedItems = await renderAuthorization();
+  }
 
-  if (!hasContent) {
+  if (!renderedItems) {
     renderNotification();
   }
 

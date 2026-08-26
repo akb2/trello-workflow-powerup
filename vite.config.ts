@@ -8,8 +8,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         connectors: fileURLToPath(new URL("./index.html", import.meta.url)),
-        workflow: fileURLToPath(new URL("./src/pages/workflow/index.html", import.meta.url)),
+        authorization: fileURLToPath(new URL("./src/pages/authorization/index.html", import.meta.url)),
         settings: fileURLToPath(new URL("./src/pages/settings/index.html", import.meta.url)),
+        workflow: fileURLToPath(new URL("./src/pages/workflow/index.html", import.meta.url)),
       },
     },
   },

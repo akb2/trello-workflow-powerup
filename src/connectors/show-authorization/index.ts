@@ -6,5 +6,8 @@ export const showAuthorizationConnector = (t: TrelloPowerUpContext): Promise<unk
   title: "Authorize Workflow",
   url: url.href,
   height: 120,
-  callback: (trelloContext: TrelloPowerUpContext) => trelloContext.closePopup(),
+  callback: (trelloContext: TrelloPowerUpContext) => {
+    trelloContext.closePopup();
+    window.location.reload();
+  },
 });

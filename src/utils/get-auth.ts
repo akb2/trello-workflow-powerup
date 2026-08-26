@@ -6,9 +6,7 @@ export const getAuth = async (t: TrelloPowerUpContext) => {
   let token = await api.getToken();
 
   if (!token) {
-    token = await api.authorize({
-      scope: "read,write",
-    });
+    throw new Error("Power-Up is not authorized");
   }
 
   return new URLSearchParams({

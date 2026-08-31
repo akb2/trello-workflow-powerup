@@ -88,7 +88,7 @@ const renderChangeType = async (): Promise<boolean> => {
         await requestRender();
       },
     }),
-    icon: lucideIcon('refresh-ccw-dot'),
+    icon: lucideIcon('tag'),
     theme: "secondary",
     text: buttonText,
   });

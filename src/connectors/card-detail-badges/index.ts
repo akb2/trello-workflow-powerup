@@ -1,5 +1,6 @@
 import { isDefined } from "@akb2/types-tools";
 import { CARD_TYPE_COLORS } from "../../data/card-type-colors";
+import { CARD_TYPES_NAMES } from "../../data/card-type-names";
 import { TrelloBadgeColor } from "../../models/trello-badge-color";
 import { TrelloCardDetailBadge } from "../../models/trello-card-detail-badge";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
@@ -20,7 +21,7 @@ export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promis
 
   if (isDefined(type)) {
     badges.push({
-      text: `Type: ${type}`,
+      text: `Type: ${CARD_TYPES_NAMES[type]}`,
       color: CARD_TYPE_COLORS[type],
     });
   }

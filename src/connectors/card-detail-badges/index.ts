@@ -16,9 +16,9 @@ export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promis
     getCardSettings(t),
   ]);
 
-  const setType = () => openTypePicker({
-    trelloContext: t,
-    onSelect: type => setCardSettings(t, { type })
+  const setType = (trelloContext: TrelloPowerUpContext) => openTypePicker({
+    trelloContext,
+    onSelect: type => setCardSettings(trelloContext, { type })
   });
 
   badges.push({

@@ -6,6 +6,8 @@ import { TrelloCardDetailBadge } from "../../models/trello-card-detail-badge";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { getCardSettings } from "../../utils/get-card-settings";
 import { getTaskNumber } from "../../utils/get-task-number";
+import { openTypePicker } from "../../utils/open-type-picker";
+import { setCardSettings } from "../../utils/set-card-settings";
 
 export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promise<TrelloCardDetailBadge[]> => {
   const badges: TrelloCardDetailBadge[] = [];
@@ -23,6 +25,10 @@ export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promis
     badges.push({
       text: `Type: ${CARD_TYPES_NAMES[type]}`,
       color: CARD_TYPE_COLORS[type],
+      callback: () => openTypePicker({
+        trelloContext: t,
+        onSelect: type => setCardSettings(t, { type })
+      })
     });
   }
 

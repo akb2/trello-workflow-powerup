@@ -5,12 +5,9 @@ import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { getAuth } from "../../utils/get-auth";
-import { getCardSettings } from "../../utils/get-card-settings";
 import { lucideIcon } from "../../utils/lucide-icon";
-import { openTypePicker } from "../../utils/open-type-picker";
-import { setCardSettings } from "../../utils/set-card-settings";
 import { BUTTONS } from "./buttons";
-import { CHANGE_TYPE_BUTTON_TEXTS, CHECKING_INTERVAL, NO_BUTTONS_NOTIFICATION } from "./data";
+import { CHECKING_INTERVAL, NO_BUTTONS_NOTIFICATION } from "./data";
 
 const t = window.TrelloPowerUp.iframe(APP_OPTIONS);
 const rootContainer = document.getElementById("root-container");
@@ -74,34 +71,6 @@ const renderAssignee = async (): Promise<boolean> => {
   return false;
 };
 
-const renderChangeType = async (): Promise<boolean> => {
-  const { type } = await getCardSettings(t);
-  const buttonText = CHANGE_TYPE_BUTTON_TEXTS[`${isDefined(type)}`];
-  const changeTypeElement = await buttonComponent({
-    trelloContext: t,
-    callback: ({ }, mouseEvent) => openTypePicker({
-      trelloContext: t,
-      selectedType: type,
-      mouseEvent,
-      onSelect: async (newType) => {
-        await setCardSettings(t, { type: newType });
-        await requestRender();
-      },
-    }),
-    icon: lucideIcon('tag'),
-    theme: "secondary",
-    text: buttonText,
-  });
-
-  if (isDefined(changeTypeElement)) {
-    rootContainer.appendChild(changeTypeElement);
-
-    return true;
-  }
-
-  return false;
-};
-
 const renderAuthorization = async (): Promise<boolean> => {
   rootContainer.appendChild(await buttonComponent({
     trelloContext: t,
@@ -137,7 +106,7 @@ const render = async () => {
   rootContainer.replaceChildren();
 
   if (auth) {
-    renderedItems = (await Promise.all([renderAssignee(), renderButtons(), renderChangeType()])).some(Boolean);
+    renderedItems = (await Promise.all([renderAssignee(), renderButtons()])).some(Boolean);
   } else {
     renderedItems = await renderAuthorization();
   }

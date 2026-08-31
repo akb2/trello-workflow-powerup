@@ -19,6 +19,20 @@ export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<Trel
     getCardSettings(t),
   ]);
 
+  badges.push({
+    text: taskNumber,
+    icon: lucideIcon("hash"),
+    color: TrelloBadgeColor.Blue,
+  });
+
+  if (isDefined(type)) {
+    badges.push({
+      text: CARD_TYPES_NAMES[type],
+      icon: CARD_TYPES_ICONS[type],
+      color: CARD_TYPE_COLORS[type],
+    });
+  }
+
   if (assignee) {
     const avatarUrl = getMemberAvatarUrl(assignee);
 
@@ -29,20 +43,6 @@ export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<Trel
       monochrome: !avatarUrl,
     });
   }
-
-  if (isDefined(type)) {
-    badges.push({
-      text: CARD_TYPES_NAMES[type],
-      icon: CARD_TYPES_ICONS[type],
-      color: CARD_TYPE_COLORS[type],
-    });
-  }
-
-  badges.push({
-    text: taskNumber,
-    icon: lucideIcon("hash"),
-    color: TrelloBadgeColor.Blue,
-  });
 
   return badges;
 };

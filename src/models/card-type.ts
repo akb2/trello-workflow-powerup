@@ -3,5 +3,5 @@ export enum CardType {
   Feature = 'feature',
   Improvement = 'improvement',
   Refactoring = 'refactoring',
-  CriticalIssue = 'critical-issue'
+  CriticalIssue = 'critical-issue',
 }

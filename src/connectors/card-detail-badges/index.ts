@@ -1,6 +1,7 @@
-import { isDefined } from "@akb2/types-tools";
+import { isDefined, NotDefinable } from "@akb2/types-tools";
 import { CARD_TYPE_COLORS } from "../../data/card-type-colors";
 import { CARD_TYPES_NAMES } from "../../data/card-type-names";
+import { CardType } from "../../models/card-type";
 import { TrelloBadgeColor } from "../../models/trello-badge-color";
 import { TrelloCardDetailBadge } from "../../models/trello-card-detail-badge";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
@@ -16,8 +17,9 @@ export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promis
     getCardSettings(t),
   ]);
 
-  const setType = (trelloContext: TrelloPowerUpContext) => openTypePicker({
+  const setType = (selectedType: NotDefinable<CardType>, trelloContext: TrelloPowerUpContext) => openTypePicker({
     trelloContext,
+    selectedType,
     onSelect: type => setCardSettings(trelloContext, { type })
   });
 
@@ -30,13 +32,13 @@ export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promis
     badges.push({
       text: `Type: ${CARD_TYPES_NAMES[type]}`,
       color: CARD_TYPE_COLORS[type],
-      callback: setType,
+      callback: setType.bind(null, type),
     });
   } else {
     badges.push({
       text: 'Select a type',
       color: TrelloBadgeColor.Yellow,
-      callback: setType,
+      callback: setType.bind(null, null),
     });
   }
 

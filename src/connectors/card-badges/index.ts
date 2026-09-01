@@ -1,4 +1,7 @@
 import { isDefined } from "@akb2/types-tools";
+import { CARD_PRIORITY_COLORS } from "../../data/card-priority-colors";
+import { CARD_PRIORITY_ICONS } from "../../data/card-priority-icons";
+import { CARD_PRIORITY_NAMES } from "../../data/card-priority-names";
 import { CARD_TYPE_COLORS } from "../../data/card-type-colors";
 import { CARD_TYPES_ICONS } from "../../data/card-type-icons";
 import { CARD_TYPES_NAMES } from "../../data/card-type-names";
@@ -13,7 +16,7 @@ import { lucideIcon } from "../../utils/lucide-icon";
 
 export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<TrelloCardBadge[]> => {
   const badges: TrelloCardBadge[] = [];
-  const [taskNumber, assignee, { type }] = await Promise.all([
+  const [taskNumber, assignee, { type, priority }] = await Promise.all([
     getTaskNumber(t),
     getCardAssignee(t),
     getCardSettings(t),
@@ -30,6 +33,14 @@ export const cardBadgesConnector = async (t: TrelloPowerUpContext): Promise<Trel
       text: CARD_TYPES_NAMES[type],
       icon: CARD_TYPES_ICONS[type],
       color: CARD_TYPE_COLORS[type],
+    });
+  }
+
+  if (isDefined(priority)) {
+    badges.push({
+      text: CARD_PRIORITY_NAMES[priority],
+      icon: CARD_PRIORITY_ICONS[priority],
+      color: CARD_PRIORITY_COLORS[priority],
     });
   }
 

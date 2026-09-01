@@ -31,7 +31,7 @@ export const BUTTONS: TrelloButton[] = [
     condition: ButtonCondition.Edit,
     listType: ListType.ReadyForDevelopment,
     callback: async (trelloContext) => {
-      const card = await trelloContext.card();
+      const card = await trelloContext.card("id");
       const hasComment = await hasCurrentMemberRecentComment(trelloContext, card.id);
 
       if (!hasComment) {

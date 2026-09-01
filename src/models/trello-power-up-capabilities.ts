@@ -1,3 +1,4 @@
+import { CardInListOrderResult } from "./card-in-list-order-result";
 import { TrelloAuthorizationStatus } from "./trello-authorization-status";
 import { TrelloButton } from "./trello-button";
 import { TrelloCardBackSection } from "./trello-card-back-section";
@@ -14,4 +15,5 @@ export interface TrelloPowerUpCapabilities {
   "show-settings"?: (t: TrelloPowerUpContext, opts?: unknown) => unknown | Promise<unknown>;
   "card-badges"?: (t: TrelloPowerUpContext, opts?: unknown) => TrelloCardBadge[] | Promise<TrelloCardBadge[]>;
   "card-detail-badges"?: (t: TrelloPowerUpContext, opts?: unknown) => TrelloCardDetailBadge[] | Promise<TrelloCardDetailBadge[]>;
+  "list-sorters": (t: TrelloPowerUpContext, opts?: unknown) => CardInListOrderResult[] | Promise<CardInListOrderResult[]>,
 }

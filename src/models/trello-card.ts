@@ -3,4 +3,5 @@ export interface TrelloCard {
   idList: string;
   name: string;
   idShort: number;
+  due: number;
 }

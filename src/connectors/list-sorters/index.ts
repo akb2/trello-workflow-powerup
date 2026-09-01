@@ -1,9 +1,9 @@
 import { isDefined } from "@akb2/types-tools";
 import { CARD_PRIORITY_ORDER } from "../../data/card-priority-order";
-import { compareCardsPriority } from "../../data/compare-cards-priority";
 import { ListSorterOptions } from "../../models/list-sorter-options";
 import { SortableCard } from "../../models/sortable-card";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
+import { compareCardsPriority } from "../../utils/compare-cards-priority";
 import { getCardSettings } from "../../utils/get-card-settings";
 
 export const listSortersConnector = ({ }: TrelloPowerUpContext) => ([

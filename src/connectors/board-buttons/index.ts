@@ -37,7 +37,7 @@ export const boardButtonsConnector = async (t: TrelloPowerUpContext): Promise<un
 
   await process();
 
-  intervalId = window.setInterval(() => void process(), 5_000);
+  intervalId = window.setInterval(() => void process(), 2_000);
 
   return [];
 };

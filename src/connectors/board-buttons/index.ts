@@ -1,6 +1,7 @@
 import { isDefined } from "@akb2/types-tools";
 import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { initializeCards } from "../../utils/initialize-cards";
+import { normalizeCardsOrder } from "../../utils/normalize-cards-order";
 
 let intervalId: number | undefined;
 let currentBoardId: string | undefined;
@@ -28,6 +29,7 @@ export const boardButtonsConnector = async (t: TrelloPowerUpContext): Promise<un
 
     try {
       await initializeCards(t);
+      await normalizeCardsOrder(t);
     } catch (error) {
       console.error("Failed to initialize cards", error);
     } finally {
@@ -35,7 +37,7 @@ export const boardButtonsConnector = async (t: TrelloPowerUpContext): Promise<un
     }
   };
 
-  await process();
+  void process();
 
   intervalId = window.setInterval(() => void process(), 2_000);
 

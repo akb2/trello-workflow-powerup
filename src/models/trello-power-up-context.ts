@@ -13,6 +13,7 @@ export interface TrelloPowerUpContext {
   list(...fields: Array<keyof TrelloList | "all">): Promise<TrelloList>;
   lists(...fields: Array<keyof TrelloList>): Promise<TrelloList[]>;
   card(...fields: Array<keyof TrelloCard | "all">): Promise<TrelloCard>;
+  cards<K extends keyof TrelloCard>(...fields: K[]): Promise<Array<Pick<TrelloCard, K>>>;
   member(...fields: Array<keyof TrelloMember>): Promise<TrelloMember>;
   board<K extends keyof TrelloBoard>(...fields: K[]): Promise<Pick<TrelloBoard, K>>;
 

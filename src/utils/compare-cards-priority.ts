@@ -6,12 +6,13 @@ export const compareCardsPriority = (a: SortableCard, b: SortableCard): number =
     return a.priority - b.priority;
   }
 
-  const aDue = anyToInt(a.card.due) > 0
-    ? new Date(a.card.due).getTime()
+  const aCardDue = anyToInt(a.card.due);
+  const bCardDue = anyToInt(b.card.due);
+  const aDue = aCardDue > 0
+    ? new Date(aCardDue).getTime()
     : Number.POSITIVE_INFINITY;
-
-  const bDue = anyToInt(b.card.due) > 0
-    ? new Date(b.card.due).getTime()
+  const bDue = bCardDue > 0
+    ? new Date(bCardDue).getTime()
     : Number.POSITIVE_INFINITY;
 
   if (aDue !== bDue) {

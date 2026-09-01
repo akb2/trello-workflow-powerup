@@ -38,6 +38,12 @@ export interface TrelloPowerUpContext {
   memberCanWriteToModel(model: TrelloModelType): boolean;
   isMemberSignedIn(): boolean;
 
+  alert(payload: {
+    message: string;
+    // Duration in seconds
+    duration?: number;
+  }): Promise<unknown>;
+
   popup(options: TrelloPopupOptions): Promise<unknown>;
   closePopup(): Promise<unknown>;
   notifyParent(message: string, payload?: unknown): Promise<unknown>;

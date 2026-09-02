@@ -1,5 +1,6 @@
 import { isDefined, NotDefinable } from "@akb2/types-tools";
 import { ALERT_DURATION_IN_SECONDS } from "../data/alert-durations-in-seconds";
+import { sendToInCodeReviewHandler } from "../handlers/send-to-in-code-review.handler";
 import { sendToStartDevelopmentHandler } from "../handlers/send-to-start-development.handler";
 import { ListType } from "../models/list-type";
 import { TrelloCard } from "../models/trello-card";
@@ -64,6 +65,7 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
     case ListType.InDevelopment:
       await sendToStartDevelopmentHandler(trelloContext, card);
     case ListType.InCodeReview:
+      await sendToInCodeReviewHandler(trelloContext, card);
     case ListType.ReadyForTesting:
     case ListType.InTesting:
     case ListType.ReadyForRelease:

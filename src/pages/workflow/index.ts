@@ -3,6 +3,7 @@ import { assigneeFieldComponent } from "../../components/assignee-field/assignee
 import { assigneeComponent } from "../../components/assignee/assignee";
 import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
+import { ListType } from "../../models/list-type";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { getAuth } from "../../utils/get-auth";
 import { getCard } from "../../utils/get-card";
@@ -34,7 +35,7 @@ const renderButtons = async (): Promise<boolean> => {
   let renderedButtonsCount = 0;
 
   for (const { listTypes, callback, text, icon, condition, theme } of BUTTONS) {
-    if (checkButtonCondition(t, condition) && (listTypes?.length === 0 || listTypes?.includes(list.name))) {
+    if (checkButtonCondition(t, condition) && (listTypes?.length === 0 || listTypes?.includes(list.name as ListType))) {
       try {
         actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text, trelloContext: t }));
         renderedButtonsCount++;

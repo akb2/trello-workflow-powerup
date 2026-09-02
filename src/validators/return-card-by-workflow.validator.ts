@@ -7,6 +7,8 @@ export const returnCardByWorkflowValidator = async (trelloContext: TrelloPowerUp
 
   if (!hasComment) {
     trelloContext.alert({ message: `${card.name}: You must leave a recent comment before returning this card.`, duration: 15 });
+
+    return false;
   }
 
   return true;

@@ -4,6 +4,7 @@ import { returnToReadyForDevelopmentHandler } from "../../handlers/return-to-rea
 import { sendForClarificationHandler } from "../../handlers/send-for-clarification.handler";
 import { sendToInCodeReviewHandler } from "../../handlers/send-to-in-code-review.handler";
 import { sendToReadyForDevelopmentHandler } from "../../handlers/send-to-ready-for-development.handler";
+import { sendToReadyForTestingHandler } from "../../handlers/send-to-ready-for-testing.handler";
 import { sendToStartDevelopmentHandler } from "../../handlers/send-to-start-development.handler";
 import { ButtonCondition } from "../../models/button-condition";
 import { ListType } from "../../models/list-type";
@@ -15,8 +16,17 @@ const RETURN_FOR_CLARIFICATION_BUTTON: TrelloButton = {
   text: "Return for Clarification",
   icon: lucideIcon('square-dashed-text'),
   condition: ButtonCondition.Edit,
-  listTypes: [ListType.ReadyForDevelopment, ListType.InDevelopment],
+  listTypes: [ListType.ReadyForDevelopment, ListType.InDevelopment, ListType.InCodeReview],
   callback: trelloContext => returnToClarificationHandler(trelloContext),
+};
+
+const STOP_DEVELOPMENT_BUTTON: TrelloButton = {
+  theme: "secondary",
+  text: "Stop Development",
+  icon: lucideIcon('pause'),
+  condition: ButtonCondition.Edit,
+  listTypes: [ListType.InDevelopment, ListType.InCodeReview],
+  callback: trelloContext => returnToReadyForDevelopmentHandler(trelloContext),
 };
 
 export const BUTTONS: TrelloButton[] = [
@@ -76,14 +86,7 @@ export const BUTTONS: TrelloButton[] = [
 
   // ? RETURN_FOR_CLARIFICATION_BUTTON,
 
-  {
-    theme: "secondary",
-    text: "Stop Development",
-    icon: lucideIcon('pause'),
-    condition: ButtonCondition.Edit,
-    listTypes: [ListType.InDevelopment],
-    callback: trelloContext => returnToReadyForDevelopmentHandler(trelloContext),
-  },
+  STOP_DEVELOPMENT_BUTTON,
 
   {
     theme: "primary",
@@ -92,5 +95,21 @@ export const BUTTONS: TrelloButton[] = [
     condition: ButtonCondition.Edit,
     listTypes: [ListType.InDevelopment],
     callback: trelloContext => sendToInCodeReviewHandler(trelloContext),
+  },
+
+  /**
+   * In Code Review
+   */
+
+  // ? RETURN_FOR_CLARIFICATION_BUTTON,
+  // ? STOP_DEVELOPMENT_BUTTON,
+
+  {
+    theme: "primary",
+    text: "Ready for Testing",
+    icon: lucideIcon('bug'),
+    condition: ButtonCondition.Edit,
+    listTypes: [ListType.InCodeReview],
+    callback: trelloContext => sendToReadyForTestingHandler(trelloContext),
   },
 ];

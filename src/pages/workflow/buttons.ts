@@ -1,9 +1,11 @@
+import { returnToBacklogHandler } from "../../handlers/return-to-backlog.handler";
+import { returnToClarificationHandler } from "../../handlers/return-to-clarification.handler";
 import { sendForClarificationHandler } from "../../handlers/send-for-clarification.handler";
+import { sendToReadyForDevelopmentHandler } from "../../handlers/send-to-ready-for-development.handler";
 import { startDevelopmentHandler } from "../../handlers/start-development.handler";
 import { ButtonCondition } from "../../models/button-condition";
 import { ListType } from "../../models/list-type";
 import { TrelloButton } from "../../models/trello-button";
-import { hasCurrentMemberRecentComment } from "../../utils/has-current-member-recent-comment";
 import { lucideIcon } from "../../utils/lucide-icon";
 
 export const BUTTONS: TrelloButton[] = [
@@ -17,7 +19,29 @@ export const BUTTONS: TrelloButton[] = [
     icon: lucideIcon('text-search'),
     condition: ButtonCondition.Edit,
     listType: ListType.BackLog,
-    callback: sendForClarificationHandler.bind(null),
+    callback: trelloContext => sendForClarificationHandler(trelloContext),
+  },
+
+  /**
+   * In Clarifictaion
+   */
+
+  {
+    theme: "secondary",
+    text: "Return in Backlog",
+    icon: lucideIcon('graduation-cap'),
+    condition: ButtonCondition.Edit,
+    listType: ListType.InClarification,
+    callback: trelloContext => returnToBacklogHandler(trelloContext),
+  },
+
+  {
+    theme: "primary",
+    text: "Ready for Development",
+    icon: lucideIcon('ellipsis'),
+    condition: ButtonCondition.Edit,
+    listType: ListType.InClarification,
+    callback: trelloContext => sendToReadyForDevelopmentHandler(trelloContext),
   },
 
   /**
@@ -30,18 +54,7 @@ export const BUTTONS: TrelloButton[] = [
     icon: lucideIcon('square-dashed-text'),
     condition: ButtonCondition.Edit,
     listType: ListType.ReadyForDevelopment,
-    callback: async (trelloContext) => {
-      const card = await trelloContext.card("id");
-      const hasComment = await hasCurrentMemberRecentComment(trelloContext, card.id);
-
-      if (!hasComment) {
-        await trelloContext.alert({ message: "You must add a comment before returning for clarification.", duration: 15 });
-
-        return;
-      }
-
-      await sendForClarificationHandler(trelloContext);
-    },
+    callback: trelloContext => returnToClarificationHandler(trelloContext),
   },
 
   {
@@ -50,6 +63,6 @@ export const BUTTONS: TrelloButton[] = [
     icon: lucideIcon('code-xml'),
     condition: ButtonCondition.Edit,
     listType: ListType.ReadyForDevelopment,
-    callback: startDevelopmentHandler.bind(null),
+    callback: trelloContext => startDevelopmentHandler(trelloContext),
   },
 ];

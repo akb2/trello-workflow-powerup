@@ -1,19 +1,18 @@
 import { ListType } from "../models/list-type";
+import { TrelloCard } from "../models/trello-card";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
-import { getCardSettings } from "../utils/get-card-settings";
-import { getListSettingsByType } from "../utils/get-list-settings-by-type";
+import { assignToColumnsAssignee } from "../utils/assing-to-columns-assignee";
 import { moveCardToList } from "../utils/move-card-to-list";
-import { setCardAssignee } from "../utils/set-card-assignee";
+import { returnCardByWorkflowValidator } from "../validators/return-card-by-workflow.validator";
 
-export const sendForClarificationHandler = async (t: TrelloPowerUpContext): Promise<void> => {
-  const [card, { assigneeId }, { assigneeId: defaultAssigneeId }] = await Promise.all([
-    t.card("id"),
-    getCardSettings(t),
-    getListSettingsByType(t, ListType.InClarification),
-  ]);
+export const sendForClarificationHandler = async (trelloContext: TrelloPowerUpContext, optionalCard?: TrelloCard): Promise<void> => {
+  const card = optionalCard ?? await trelloContext.card("id");
+  const isValid = await returnCardByWorkflowValidator(trelloContext, card);
 
-  await Promise.all([
-    moveCardToList(t, card, ListType.InClarification),
-    setCardAssignee(t, defaultAssigneeId ?? assigneeId),
-  ]);
+  if (isValid) {
+    await Promise.all([
+      moveCardToList(trelloContext, card, ListType.InClarification),
+      assignToColumnsAssignee(trelloContext, ListType.InClarification, true),
+    ]);
+  }
 };

@@ -5,14 +5,14 @@ import { assignToColumnsAssignee } from "../utils/assing-to-columns-assignee";
 import { moveCardToList } from "../utils/move-card-to-list";
 import { returnCardByWorkflowValidator } from "../validators/return-card-by-workflow.validator";
 
-export const returnToClarificationHandler = async (trelloContext: TrelloPowerUpContext, optionalCard?: TrelloCard) => {
+export const returnToBacklogHandler = async (trelloContext: TrelloPowerUpContext, optionalCard?: TrelloCard): Promise<void> => {
   const card = optionalCard ?? await trelloContext.card("id");
   const isValid = await returnCardByWorkflowValidator(trelloContext, card);
 
   if (isValid) {
     await Promise.all([
-      moveCardToList(trelloContext, card, ListType.InClarification),
-      assignToColumnsAssignee(trelloContext, ListType.InClarification, false)
+      moveCardToList(trelloContext, card, ListType.BackLog),
+      assignToColumnsAssignee(trelloContext, ListType.BackLog, false)
     ]);
   }
-}
+};

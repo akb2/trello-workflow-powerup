@@ -23,7 +23,7 @@ export const readyForDevelopmentValidator = async (trelloContext: TrelloPowerUpC
       errors.push("a defined task type");
     }
 
-    trelloContext.alert({ message: `The task must have: ${errors.join(", ")}`, duration: 15 });
+    trelloContext.alert({ message: `${card.name}: The task must have: ${errors.join(", ")}`, duration: 15 });
 
     return false;
   }

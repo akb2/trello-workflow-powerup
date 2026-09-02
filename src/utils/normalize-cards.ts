@@ -17,15 +17,17 @@ export const normalizeCards = async (t: TrelloPowerUpContext): Promise<void> => 
   ]);
 
   for (const card of cards) {
-    const action = actions.find(
-      ({ data }) => data.card.id === card.id,
-    );
+    const action = actions.find(({ data }) => data.card.id === card.id);
 
     if (!isDefined(action)) {
       continue;
     }
 
     if (action.idMemberCreator !== member.id) {
+      continue;
+    }
+
+    if (isDefined(action.appCreator)) {
       continue;
     }
 

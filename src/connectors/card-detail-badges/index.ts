@@ -24,7 +24,14 @@ export const cardDetailBadgesConnector = async (t: TrelloPowerUpContext): Promis
   const setType = (selectedType: NotDefinable<CardType>, trelloContext: TrelloPowerUpContext) => openTypePicker({
     trelloContext,
     selectedType,
-    onSelect: type => setCardSettings(trelloContext, { type })
+    onSelect: async type => {
+      const { priority } = await getCardSettings(trelloContext);
+
+      setCardSettings(trelloContext, {
+        type,
+        priority: type === CardType.CriticalIssue ? CardPriority.VeryHigh : priority,
+      })
+    }
   });
 
   const setPriority = (selectedPriority: NotDefinable<CardPriority>, trelloContext: TrelloPowerUpContext) => openPriorityPicker({

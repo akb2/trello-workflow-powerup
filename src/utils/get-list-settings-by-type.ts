@@ -3,9 +3,10 @@ import { ListSettings } from "../models/list-settings";
 import { ListType } from "../models/list-type";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
 import { getListSettings } from "./get-list-settings";
+import { getLists } from "./get-lists";
 
 export const getListSettingsByType = async (t: TrelloPowerUpContext, listType: ListType): Promise<ListSettings> => {
-  const lists = await t.lists("id", "name");
+  const lists = await getLists(t);
   const list = lists.find((l) => l.name === listType);
 
   if (!isDefined(list)) {

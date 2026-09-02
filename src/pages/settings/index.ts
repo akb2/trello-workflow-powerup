@@ -7,6 +7,7 @@ import { TrelloPowerUpContext } from "../../models/trello-power-up-context";
 import { connectStyle } from "../../utils/connect-style";
 import { getBoardSettings } from "../../utils/get-board-settings";
 import { getListSettings } from "../../utils/get-list-settings";
+import { getLists } from "../../utils/get-lists";
 import { lucideIcon } from "../../utils/lucide-icon";
 import { openMemberPicker } from "../../utils/open-member-picker";
 import { setBoardSettings } from "../../utils/set-board-settings";
@@ -66,7 +67,7 @@ const saveButtonRender = async (trelloContext: TrelloPowerUpContext) => {
 
 const listsRender = async (trelloContext: TrelloPowerUpContext) => {
   const listsContainer = document.getElementById("list-assignees-container");
-  const lists = await trelloContext.lists("id", "name");
+  const lists = await getLists(trelloContext);
   const listTypes = Object.values(ListType);
 
   if (!isDefined(listsContainer)) {

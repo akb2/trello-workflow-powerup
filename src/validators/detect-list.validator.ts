@@ -3,6 +3,7 @@ import { ListType } from "../models/list-type";
 import { TrelloCard } from "../models/trello-card";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
 import { getCards } from "../utils/get-cards";
+import { getLists } from "../utils/get-lists";
 import { isCardMoveBackward } from "../utils/is-card-move-backward";
 import { readyForDevelopmentValidator } from "./ready-for-development.validator";
 import { returnCardByWorkflowValidator } from "./return-card-by-workflow.validator";
@@ -25,12 +26,10 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
   }
 
   const listId = card.idList;
-  const lists = await trelloContext.lists();
+  const lists = await getLists(trelloContext);
   const list = lists.find(l => l.id === listId);
 
   if (!list?.name?.length) {
-    console.log('akb2', card, lists);
-
     throw new Error("List name not found");
   }
 

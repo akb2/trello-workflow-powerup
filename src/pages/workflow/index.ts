@@ -5,6 +5,7 @@ import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { getAuth } from "../../utils/get-auth";
+import { getLists } from "../../utils/get-lists";
 import { lucideIcon } from "../../utils/lucide-icon";
 import { BUTTONS } from "./buttons";
 import { CHECKING_INTERVAL, NO_BUTTONS_NOTIFICATION } from "./data";
@@ -21,7 +22,7 @@ if (!isDefined(rootContainer)) {
 
 const renderButtons = async (): Promise<boolean> => {
   const card = await t.card("idList");
-  const lists = await t.lists("id", "name");
+  const lists = await getLists(t);
   const list = lists.find(({ id }) => id === card.idList);
   const actionsContainer = document.createElement("div");
 

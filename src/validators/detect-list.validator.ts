@@ -52,7 +52,7 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
     case ListType.ReadyForDevelopment:
       return readyForDevelopmentValidator(trelloContext, card);
     case ListType.InDevelopment:
-      startDevelopmentHandler(trelloContext, card);
+      await startDevelopmentHandler(trelloContext, card);
 
       return true;
     case ListType.InCodeReview:

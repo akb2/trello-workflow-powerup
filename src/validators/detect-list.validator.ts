@@ -1,4 +1,5 @@
 import { isDefined, NotDefinable } from "@akb2/types-tools";
+import { startDevelopmentHandler } from "../handlers/start-development.handler";
 import { ListType } from "../models/list-type";
 import { TrelloCard } from "../models/trello-card";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
@@ -39,19 +40,21 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
     throw new Error("List type not found");
   }
 
+  if (isDefined(beforeListType) && isCardMoveBackward(beforeListType, listType)) {
+    return returnCardByWorkflowValidator(trelloContext, card);
+  }
+
   switch (listType) {
     case ListType.BackLog:
       return true;
     case ListType.InClarification:
       return true;
-    case ListType.ReadyForDevelopment: {
-      if (isDefined(beforeListType) && isCardMoveBackward(beforeListType, listType)) {
-        return returnCardByWorkflowValidator(trelloContext, card);
-      }
-
+    case ListType.ReadyForDevelopment:
       return readyForDevelopmentValidator(trelloContext, card);
-    }
     case ListType.InDevelopment:
+      startDevelopmentHandler(trelloContext, card);
+
+      return true;
     case ListType.InCodeReview:
     case ListType.ReadyForTesting:
     case ListType.InTesting:

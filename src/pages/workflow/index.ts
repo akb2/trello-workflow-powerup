@@ -36,13 +36,19 @@ const renderButtons = async (): Promise<boolean> => {
   let renderedButtonsCount = 0;
 
   for (const { listTypes, cardTypes, callback, text, icon, condition, theme } of BUTTONS) {
-    const availByListType = listTypes?.length === 0 || listTypes?.includes(listType);
-    const availByTaskType = isDefined(type) && ((isDefined(cardTypes) && cardTypes[type]?.includes(listType)) || availByListType);
-
-    if (checkButtonCondition(t, condition) && (availByListType || availByTaskType)) {
-      actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text, trelloContext: t }));
-      renderedButtonsCount++;
+    if (!checkButtonCondition(t, condition)) {
+      continue;
     }
+
+    const notAvailableByListType = isDefined(listTypes) && !listTypes?.includes(listType);
+    const notAvailableByTaskType = isDefined(type) && isDefined(cardTypes) && !cardTypes[type]?.includes(listType);
+
+    if (notAvailableByListType || notAvailableByTaskType) {
+      continue;
+    }
+
+    actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text, trelloContext: t }));
+    renderedButtonsCount++;
   }
 
   if (renderedButtonsCount > 0) {

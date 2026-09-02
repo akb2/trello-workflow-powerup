@@ -39,7 +39,7 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
     throw new Error("List type not found");
   }
 
-  console.log('akb2', card, listType, beforeListType);
+  console.log('akb2', card, lists, listType, beforeListType);
   switch (listType) {
     case ListType.BackLog:
       return true;

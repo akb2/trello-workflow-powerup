@@ -2,7 +2,7 @@ import { returnToBacklogHandler } from "../../handlers/return-to-backlog.handler
 import { returnToClarificationHandler } from "../../handlers/return-to-clarification.handler";
 import { sendForClarificationHandler } from "../../handlers/send-for-clarification.handler";
 import { sendToReadyForDevelopmentHandler } from "../../handlers/send-to-ready-for-development.handler";
-import { startDevelopmentHandler } from "../../handlers/start-development.handler";
+import { sendToStartDevelopmentHandler } from "../../handlers/send-to-start-development.handler";
 import { ButtonCondition } from "../../models/button-condition";
 import { ListType } from "../../models/list-type";
 import { TrelloButton } from "../../models/trello-button";
@@ -63,6 +63,6 @@ export const BUTTONS: TrelloButton[] = [
     icon: lucideIcon('code-xml'),
     condition: ButtonCondition.Edit,
     listType: ListType.ReadyForDevelopment,
-    callback: trelloContext => startDevelopmentHandler(trelloContext),
+    callback: trelloContext => sendToStartDevelopmentHandler(trelloContext),
   },
 ];

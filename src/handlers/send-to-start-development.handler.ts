@@ -5,7 +5,7 @@ import { getCard } from "../utils/get-card";
 import { moveCardToList } from "../utils/move-card-to-list";
 import { setCardAssignee } from "../utils/set-card-assignee";
 
-export const startDevelopmentHandler = async (trelloContext: TrelloPowerUpContext, optionalCard?: TrelloCard) => {
+export const sendToStartDevelopmentHandler = async (trelloContext: TrelloPowerUpContext, optionalCard?: TrelloCard) => {
   const card = optionalCard ?? await getCard(trelloContext);
   const member = await trelloContext.member("id");
 

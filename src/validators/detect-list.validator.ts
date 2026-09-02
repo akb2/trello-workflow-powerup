@@ -1,5 +1,5 @@
 import { isDefined, NotDefinable } from "@akb2/types-tools";
-import { startDevelopmentHandler } from "../handlers/start-development.handler";
+import { sendToStartDevelopmentHandler } from "../handlers/send-to-start-development.handler";
 import { ListType } from "../models/list-type";
 import { TrelloCard } from "../models/trello-card";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
@@ -61,14 +61,13 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
     case ListType.ReadyForDevelopment:
       return readyForDevelopmentValidator(trelloContext, card);
     case ListType.InDevelopment:
-      await startDevelopmentHandler(trelloContext, card);
-
-      return true;
+      await sendToStartDevelopmentHandler(trelloContext, card);
     case ListType.InCodeReview:
     case ListType.ReadyForTesting:
     case ListType.InTesting:
     case ListType.ReadyForRelease:
     case ListType.Done:
+      return true;
     default:
       return false;
   }

@@ -29,6 +29,8 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
   const list = lists.find(l => l.id === listId);
 
   if (!list?.name?.length) {
+    console.log('akb2', card, lists);
+
     throw new Error("List name not found");
   }
 

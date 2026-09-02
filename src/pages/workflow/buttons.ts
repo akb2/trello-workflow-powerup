@@ -1,4 +1,4 @@
-import { sendForClarificationHandler } from "../../handlers/send-for-clarification";
+import { sendForClarificationHandler } from "../../handlers/send-for-clarification.handler";
 import { ButtonCondition } from "../../models/button-condition";
 import { ListType } from "../../models/list-type";
 import { TrelloButton } from "../../models/trello-button";

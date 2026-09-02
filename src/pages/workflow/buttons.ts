@@ -1,10 +1,10 @@
 import { sendForClarificationHandler } from "../../handlers/send-for-clarification.handler";
+import { startDevelopmentHandler } from "../../handlers/start-development.handler";
 import { ButtonCondition } from "../../models/button-condition";
 import { ListType } from "../../models/list-type";
 import { TrelloButton } from "../../models/trello-button";
 import { hasCurrentMemberRecentComment } from "../../utils/has-current-member-recent-comment";
 import { lucideIcon } from "../../utils/lucide-icon";
-import { startDevelopmentHandler } from "../../utils/start-development-handler";
 
 export const BUTTONS: TrelloButton[] = [
   /**

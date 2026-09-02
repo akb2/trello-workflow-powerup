@@ -1,7 +1,7 @@
 import { ListType } from "../models/list-type";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
-import { moveCardToList } from "./move-card-to-list";
-import { setCardAssignee } from "./set-card-assignee";
+import { moveCardToList } from "../utils/move-card-to-list";
+import { setCardAssignee } from "../utils/set-card-assignee";
 
 export const startDevelopmentHandler = async (t: TrelloPowerUpContext) => {
   const card = await t.card("id");

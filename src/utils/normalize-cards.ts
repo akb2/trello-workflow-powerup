@@ -55,12 +55,10 @@ export const normalizeCards = async (t: TrelloPowerUpContext): Promise<void> => 
       processedActions.add(listAction!.id);
     }
 
-    if (isNewPositionAction) {
-      await normalizeCardPosition(t, normalizedCard);
+    await normalizeCardPosition(t, normalizedCard);
 
+    if (isNewPositionAction) {
       processedActions.add(positionAction!.id);
-    } else {
-      await normalizeCardList(t, normalizedCard, listAction!);
     }
   }
 };

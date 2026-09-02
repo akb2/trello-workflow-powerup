@@ -1,4 +1,5 @@
 import { isDefined, NotDefinable } from "@akb2/types-tools";
+import { ALERT_DURATION_IN_SECONDS } from "../data/alert-durations-in-seconds";
 import { sendToStartDevelopmentHandler } from "../handlers/send-to-start-development.handler";
 import { ListType } from "../models/list-type";
 import { TrelloCard } from "../models/trello-card";
@@ -42,7 +43,7 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
 
   // List has not changed
   if (beforeListType === listType) {
-    trelloContext.alert({ message: `${card.name}: The card is still in the same list.`, duration: 15 });
+    trelloContext.alert({ message: `${card.name}: The card is still in the same list.`, duration: ALERT_DURATION_IN_SECONDS });
 
     return true;
   }

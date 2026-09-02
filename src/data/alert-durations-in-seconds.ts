@@ -1,0 +1,1 @@
+export const ALERT_DURATION_IN_SECONDS = 5;

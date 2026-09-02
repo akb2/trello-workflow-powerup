@@ -1,4 +1,5 @@
 import { isDefined } from "@akb2/types-tools";
+import { ALERT_DURATION_IN_SECONDS } from "../data/alert-durations-in-seconds";
 import { TrelloCard } from "../models/trello-card";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
 import { getCardSettings } from "../utils/get-card-settings";
@@ -23,7 +24,7 @@ export const readyForDevelopmentValidator = async (trelloContext: TrelloPowerUpC
       errors.push("a defined task type");
     }
 
-    trelloContext.alert({ message: `${card.name}: The task must have: ${errors.join(", ")}`, duration: 15 });
+    trelloContext.alert({ message: `${card.name}: The task must have: ${errors.join(", ")}`, duration: ALERT_DURATION_IN_SECONDS });
 
     return false;
   }

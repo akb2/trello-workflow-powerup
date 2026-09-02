@@ -9,14 +9,21 @@ export const readyForDevelopmentValidator = async (trelloContext: TrelloPowerUpC
   const hasContent = isTaskHasContent(card);
 
   if (!hasContent || !isDefined(priority) || !isDefined(type)) {
-    const message = `
-      The task must have:
-      ${!hasContent ? "- Description, attachments, or comments" : ""}
-      ${!isDefined(priority) ? "- A defined task priority" : ""}
-      ${!isDefined(type) ? "- A defined task type" : ""}
-    `;
+    const errors: string[] = [];
 
-    trelloContext.alert({ message, duration: 15 });
+    if (!hasContent) {
+      errors.push("description, attachments, or comments");
+    }
+
+    if (!isDefined(priority)) {
+      errors.push("a defined task priority");
+    }
+
+    if (!isDefined(type)) {
+      errors.push("a defined task type");
+    }
+
+    trelloContext.alert({ message: `The task must have: ${errors.join(", ")}`, duration: 15 });
 
     return false;
   }

@@ -7,6 +7,6 @@ export interface TrelloButton {
   text: string;
   condition: ButtonCondition;
   callback?: (t: TrelloPowerUpContext, event: MouseEvent) => void | Promise<unknown>;
-  listType?: ListType;
+  listTypes?: ListType[];
   theme?: "primary" | "secondary" | "danger";
 }

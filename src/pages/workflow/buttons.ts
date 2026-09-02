@@ -18,7 +18,7 @@ export const BUTTONS: TrelloButton[] = [
     text: "Send for Clarification",
     icon: lucideIcon('text-search'),
     condition: ButtonCondition.Edit,
-    listType: ListType.BackLog,
+    listTypes: [ListType.BackLog],
     callback: trelloContext => sendForClarificationHandler(trelloContext),
   },
 
@@ -31,7 +31,7 @@ export const BUTTONS: TrelloButton[] = [
     text: "Return in Backlog",
     icon: lucideIcon('graduation-cap'),
     condition: ButtonCondition.Edit,
-    listType: ListType.InClarification,
+    listTypes: [ListType.InClarification],
     callback: trelloContext => returnToBacklogHandler(trelloContext),
   },
 
@@ -40,7 +40,7 @@ export const BUTTONS: TrelloButton[] = [
     text: "Ready for Development",
     icon: lucideIcon('ellipsis'),
     condition: ButtonCondition.Edit,
-    listType: ListType.InClarification,
+    listTypes: [ListType.InClarification],
     callback: trelloContext => sendToReadyForDevelopmentHandler(trelloContext),
   },
 
@@ -53,7 +53,7 @@ export const BUTTONS: TrelloButton[] = [
     text: "Return for Clarification",
     icon: lucideIcon('square-dashed-text'),
     condition: ButtonCondition.Edit,
-    listType: ListType.ReadyForDevelopment,
+    listTypes: [ListType.ReadyForDevelopment],
     callback: trelloContext => returnToClarificationHandler(trelloContext),
   },
 
@@ -62,7 +62,7 @@ export const BUTTONS: TrelloButton[] = [
     text: "Start Development",
     icon: lucideIcon('code-xml'),
     condition: ButtonCondition.Edit,
-    listType: ListType.ReadyForDevelopment,
+    listTypes: [ListType.ReadyForDevelopment],
     callback: trelloContext => sendToStartDevelopmentHandler(trelloContext),
   },
 ];

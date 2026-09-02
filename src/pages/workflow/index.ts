@@ -33,8 +33,8 @@ const renderButtons = async (): Promise<boolean> => {
 
   let renderedButtonsCount = 0;
 
-  for (const { listType, callback, text, icon, condition, theme } of BUTTONS) {
-    if (checkButtonCondition(t, condition) && (!isDefined(listType) || listType === list.name)) {
+  for (const { listTypes, callback, text, icon, condition, theme } of BUTTONS) {
+    if (checkButtonCondition(t, condition) && (listTypes?.length === 0 || listTypes?.includes(list.name))) {
       try {
         actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text, trelloContext: t }));
         renderedButtonsCount++;

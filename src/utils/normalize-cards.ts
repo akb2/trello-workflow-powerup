@@ -32,12 +32,16 @@ export const normalizeCards = async (t: TrelloPowerUpContext): Promise<void> => 
         continue;
       }
 
-      if (isDefined(action.data.listBefore) && isDefined(action.data.listAfter)) {
+      if (!isDefined(listAction) && isDefined(action.data.listBefore) && isDefined(action.data.listAfter)) {
         listAction = action;
       }
 
-      if (isDefined(action.data.old?.pos)) {
+      if (!isDefined(positionAction) && isDefined(action.data.old?.pos)) {
         positionAction = action;
+      }
+
+      if (isDefined(listAction) && isDefined(positionAction)) {
+        break;
       }
     }
 
@@ -50,7 +54,7 @@ export const normalizeCards = async (t: TrelloPowerUpContext): Promise<void> => 
     }
 
     if (isDefined(positionAction) && !processedActions.has(positionAction.id)) {
-      await normalizeCardPosition(t, normalizedCard,);
+      await normalizeCardPosition(t, normalizedCard);
 
       processedActions.add(positionAction.id);
     }

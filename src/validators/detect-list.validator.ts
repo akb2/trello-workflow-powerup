@@ -40,10 +40,19 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
     throw new Error("List type not found");
   }
 
+  // List has not changed
+  if (beforeListType === listType) {
+    trelloContext.alert({ message: `${card.name}: The card is still in the same list.`, duration: 15 });
+
+    return true;
+  }
+
+  // Card has moved backward in the workflow
   if (isDefined(beforeListType) && isCardMoveBackward(beforeListType, listType)) {
     return returnCardByWorkflowValidator(trelloContext, card);
   }
 
+  // Card has moved forward in the workflow
   switch (listType) {
     case ListType.BackLog:
       return true;

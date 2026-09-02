@@ -5,6 +5,7 @@ import { buttonComponent } from "../../components/button/button";
 import { APP_OPTIONS } from "../../data/app-settings";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { getAuth } from "../../utils/get-auth";
+import { getCard } from "../../utils/get-card";
 import { getLists } from "../../utils/get-lists";
 import { lucideIcon } from "../../utils/lucide-icon";
 import { BUTTONS } from "./buttons";
@@ -21,7 +22,7 @@ if (!isDefined(rootContainer)) {
 }
 
 const renderButtons = async (): Promise<boolean> => {
-  const card = await t.card("idList");
+  const card = await getCard(t);
   const lists = await getLists(t);
   const list = lists.find(({ id }) => id === card.idList);
   const actionsContainer = document.createElement("div");
@@ -99,8 +100,10 @@ const renderNotification = () => {
 };
 
 const render = async () => {
-  const card = await t.card("idList");
-  const auth = await getAuth(t);
+  const [card, auth] = await Promise.all([
+    getCard(t),
+    getAuth(t),
+  ]);
   let renderedItems: boolean = false;
 
   currentListId = card.idList;
@@ -126,7 +129,7 @@ const requestRender = (): Promise<void> => {
 };
 
 const checkState = async (): Promise<void> => {
-  const card = await t.card("idList");
+  const card = await getCard(t);
 
   if (card.idList === currentListId) {
     return;

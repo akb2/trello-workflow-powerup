@@ -10,5 +10,5 @@ export const getCards = async (t: TrelloPowerUpContext): Promise<TrelloCard[]> =
   "attachments",
   "badges",
   "desc",
-  "idShort"
+  "idShort",
 );

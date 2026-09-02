@@ -8,6 +8,7 @@ import { TrelloPowerUpContext } from "../models/trello-power-up-context";
 import { getCards } from "../utils/get-cards";
 import { getLists } from "../utils/get-lists";
 import { isCardMoveBackward } from "../utils/is-card-move-backward";
+import { doneValidator } from "./done.validator";
 import { readyForDevelopmentValidator } from "./ready-for-development.validator";
 import { returnCardByWorkflowValidator } from "./return-card-by-workflow.validator";
 
@@ -69,8 +70,9 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
     case ListType.ReadyForTesting:
     case ListType.InTesting:
     case ListType.ReadyForRelease:
-    case ListType.Done:
       return true;
+    case ListType.Done:
+      return doneValidator(trelloContext, card);
     default:
       return false;
   }

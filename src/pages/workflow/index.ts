@@ -7,6 +7,7 @@ import { ListType } from "../../models/list-type";
 import { checkButtonCondition } from "../../utils/check-button-condition";
 import { getAuth } from "../../utils/get-auth";
 import { getCard } from "../../utils/get-card";
+import { getCardSettings } from "../../utils/get-card-settings";
 import { getLists } from "../../utils/get-lists";
 import { lucideIcon } from "../../utils/lucide-icon";
 import { BUTTONS } from "./buttons";
@@ -23,8 +24,7 @@ if (!isDefined(rootContainer)) {
 }
 
 const renderButtons = async (): Promise<boolean> => {
-  const card = await getCard(t);
-  const lists = await getLists(t);
+  const [card, lists, { type }] = await Promise.all([getCard(t), getLists(t), getCardSettings(t)]);
   const list = lists.find(({ id }) => id === card.idList);
   const actionsContainer = document.createElement("div");
 
@@ -32,15 +32,16 @@ const renderButtons = async (): Promise<boolean> => {
     return false;
   }
 
+  const listType = list.name as ListType;
   let renderedButtonsCount = 0;
 
-  for (const { listTypes, callback, text, icon, condition, theme } of BUTTONS) {
-    if (checkButtonCondition(t, condition) && (listTypes?.length === 0 || listTypes?.includes(list.name as ListType))) {
-      try {
-        actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text, trelloContext: t }));
-        renderedButtonsCount++;
-      } catch {
-      }
+  for (const { listTypes, cardTypes, callback, text, icon, condition, theme } of BUTTONS) {
+    const availByListType = listTypes?.length === 0 || listTypes?.includes(listType);
+    const availByTaskType = isDefined(type) && (!isDefined(cardTypes) || cardTypes[type]?.includes(listType));
+
+    if (checkButtonCondition(t, condition) && availByListType && availByTaskType) {
+      actionsContainer.appendChild(await buttonComponent({ icon, theme, callback, text, trelloContext: t }));
+      renderedButtonsCount++;
     }
   }
 

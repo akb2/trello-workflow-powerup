@@ -42,8 +42,8 @@ const DONE_BUTTON: TrelloButton = {
   text: "Done",
   icon: lucideIcon('check'),
   condition: ButtonCondition.Edit,
-  listTypes: [ListType.InClarification, ListType.InCodeReview, ListType.InTesting],
-  cardTypes: { [CardType.CriticalIssue]: [ListType.InDevelopment, ListType.InCodeReview, ListType.ReadyForTesting] },
+  listTypes: [ListType.InClarification],
+  cardTypes: { [CardType.CriticalIssue]: [ListType.InDevelopment, ListType.InCodeReview, ListType.InTesting, ListType.ReadyForRelease] },
   callback: trelloContext => sendToDoneHandler(trelloContext),
 };
 

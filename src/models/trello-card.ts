@@ -4,7 +4,12 @@ export interface TrelloCard {
   id: string;
   idList: string;
   name: string;
+  desc: string;
   idShort: number;
-  due: NotDefinable<number>;
   pos: number;
+  due: NotDefinable<number>;
+  attachments: unknown[];
+  badges: {
+    comments: number;
+  };
 }

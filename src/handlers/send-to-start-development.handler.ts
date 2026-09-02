@@ -1,3 +1,4 @@
+import { isDefined } from "@akb2/types-tools";
 import { ListType } from "../models/list-type";
 import { TrelloCard } from "../models/trello-card";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
@@ -6,8 +7,10 @@ import { moveCardToList } from "../utils/move-card-to-list";
 import { setCardAssignee } from "../utils/set-card-assignee";
 
 export const sendToStartDevelopmentHandler = async (trelloContext: TrelloPowerUpContext, optionalCard?: TrelloCard) => {
-  const card = optionalCard ?? await getCard(trelloContext);
-  const member = await trelloContext.member("id");
+  const [card, member] = await Promise.all([
+    isDefined(optionalCard) ? Promise.resolve(optionalCard) : getCard(trelloContext),
+    trelloContext.member("id")
+  ]);
 
   await Promise.all([
     moveCardToList(trelloContext, card, ListType.InDevelopment),

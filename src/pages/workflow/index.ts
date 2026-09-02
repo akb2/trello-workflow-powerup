@@ -40,10 +40,13 @@ const renderButtons = async (): Promise<boolean> => {
       continue;
     }
 
-    const notAvailableByListType = isDefined(listTypes) && !listTypes?.includes(listType);
-    const notAvailableByTaskType = isDefined(type) && isDefined(cardTypes) && !cardTypes[type]?.includes(listType);
+    const isAvailable = (
+      (!isDefined(listTypes) && !isDefined(cardTypes))
+      || listTypes?.includes(listType)
+      || (isDefined(type) && cardTypes?.[type]?.includes(listType))
+    );
 
-    if (notAvailableByListType || notAvailableByTaskType) {
+    if (!isAvailable) {
       continue;
     }
 

@@ -11,6 +11,6 @@ export const startDevelopmentHandler = async (trelloContext: TrelloPowerUpContex
 
   await Promise.all([
     moveCardToList(trelloContext, card, ListType.InDevelopment),
-    setCardAssignee(trelloContext, member.id),
+    setCardAssignee(trelloContext, member.id, card.id),
   ]);
 };

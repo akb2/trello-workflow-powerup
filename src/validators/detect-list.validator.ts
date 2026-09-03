@@ -65,6 +65,8 @@ export async function detectListValidator(trelloContext: TrelloPowerUpContext, c
       return readyForDevelopmentValidator(trelloContext, card);
     case ListType.InDevelopment:
       await sendToStartDevelopmentHandler(trelloContext, card);
+
+      return true;
     case ListType.InCodeReview:
       await sendToInCodeReviewHandler(trelloContext, card);
     case ListType.ReadyForTesting:

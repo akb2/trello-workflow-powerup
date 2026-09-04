@@ -1,64 +1,42 @@
-import { isDefined, NotDefinable } from "@akb2/types-tools";
-import { TrelloCardUpdateAction } from "../models/trello-card-update-action";
+import { isDefined } from "@akb2/types-tools";
 import { TrelloPowerUpContext } from "../models/trello-power-up-context";
 import { getBoardCardUpdateActions } from "./get-board-card-update-actions";
-import { getCards } from "./get-cards";
+import { getCardsMap } from "./get-cards-map";
 import { normalizeCardList } from "./normalize-card-list";
 import { normalizeCardPosition } from "./normalize-card-position";
+import { setBoardSettingsPrivate } from "./set-board-settings-private";
 
-const processedActions = new Set<TrelloCardUpdateAction["id"]>();
-
-export const normalizeCards = async (t: TrelloPowerUpContext): Promise<void> => {
-  const [cards, actions, member] = await Promise.all([
-    getCards(t),
-    getBoardCardUpdateActions(t),
-    t.member("id"),
+export const normalizeCards = async (trelloContext: TrelloPowerUpContext): Promise<void> => {
+  const [cardsMap, actions, member] = await Promise.all([
+    getCardsMap(trelloContext),
+    getBoardCardUpdateActions(trelloContext),
+    trelloContext.member("id"),
   ]);
+  const actionsCount = actions.length;
 
-  const actualActionIds = new Set(actions.map(({ id }) => id));
-
-  for (const actionId of processedActions) {
-    if (!actualActionIds.has(actionId)) {
-      processedActions.delete(actionId);
-    }
+  if (actionsCount < 1) {
+    return;
   }
 
-  for (const card of cards) {
-    let listAction: NotDefinable<TrelloCardUpdateAction>;
-    let positionAction: NotDefinable<TrelloCardUpdateAction>;
+  for (let i = actionsCount - 1; i >= 0; i--) {
+    const action = actions[i];
+    const actionDate = Date.parse(action.date);
+    let card = cardsMap.get(action.data.card.id);
 
-    for (const action of actions) {
-      if (action.data.card.id !== card.id || action.idMemberCreator !== member.id || isDefined(action.appCreator)) {
-        continue;
-      }
-
-      if (!isDefined(listAction) && isDefined(action.data.listBefore) && isDefined(action.data.listAfter)) {
-        listAction = action;
-      }
-
-      if (!isDefined(positionAction) && isDefined(action.data.old?.pos)) {
-        positionAction = action;
-      }
-
-      if (isDefined(listAction) && isDefined(positionAction)) {
-        break;
-      }
+    if (!isDefined(card)) {
+      continue;
     }
 
-    let normalizedCard = card;
-    const isNewListAction = isDefined(listAction) && !processedActions.has(listAction.id);
-    const isNewPositionAction = isDefined(positionAction) && !processedActions.has(positionAction.id);
-
-    if (isNewListAction) {
-      normalizedCard = await normalizeCardList(t, normalizedCard, listAction!);
-
-      processedActions.add(listAction!.id);
+    if (action.idMemberCreator !== member.id || isDefined(action.appCreator)) {
+      continue;
     }
 
-    await normalizeCardPosition(t, normalizedCard);
-
-    if (isNewPositionAction) {
-      processedActions.add(positionAction!.id);
+    if (isDefined(action.data.listBefore) && isDefined(action.data.listAfter)) {
+      card = await normalizeCardList(trelloContext, card, action);
+      cardsMap.set(card.id, card);
     }
+
+    await normalizeCardPosition(trelloContext, card);
+    await setBoardSettingsPrivate(trelloContext, { lastActionTime: actionDate });
   }
 };

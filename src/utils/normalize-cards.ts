@@ -24,10 +24,14 @@ export const normalizeCards = async (trelloContext: TrelloPowerUpContext): Promi
     let card = cardsMap.get(action.data.card.id);
 
     if (!isDefined(card)) {
+      await setBoardSettingsPrivate(trelloContext, { lastActionTime: actionDate });
+
       continue;
     }
 
     if (action.idMemberCreator !== member.id || isDefined(action.appCreator)) {
+      await setBoardSettingsPrivate(trelloContext, { lastActionTime: actionDate });
+
       continue;
     }
 
